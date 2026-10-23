@@ -15,13 +15,15 @@ import java.util.List;
 public class HyperdriveInventory {
     @Id
     private HyperdriveInventoryId id;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = jakarta.persistence.CascadeType.ALL)
     private List<HyperdriveModule> hyperdriveModules;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @Cascade(CascadeType.SAVE_UPDATE)
     private HyperdriveModuleIdValidator hyperdriveModuleIdValidator;
 
-    public HyperdriveInventory() {}
+    public HyperdriveInventory() { }
 
     public HyperdriveInventory(HyperdriveInventoryId id,
                                List<HyperdriveModule> hyperdriveModules,
@@ -44,7 +46,7 @@ public class HyperdriveInventory {
             throw new HyperdriveModuleAlreadyExistsException();
         }
 
-        if (containsHyperDriveModuleWithSameActivationPeriod(hyperdriveModule)){
+        if (containsHyperDriveModuleWithSameActivationPeriod(hyperdriveModule)) {
             throw new HyperdriveModuleConflictException();
         }
 

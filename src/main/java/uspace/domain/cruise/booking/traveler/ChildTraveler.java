@@ -19,11 +19,12 @@ public class ChildTraveler extends Traveler {
     }
 
     @Override
-    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience, List<Traveler> travelersInBooking) {
+    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience,
+            List<Traveler> travelersInBooking) {
 
 //        //Solution sans TDA acceptable pour le tp1
 //        for (Traveler traveler : travelersInBooking) {
-//            if ((traveler.getCategory() == TravelerCategory.ADULT || traveler.getCategory() == TravelerCategory.SENIOR)
+// if ((traveler.getCategory() == TravelerCategory.ADULT || traveler.getCategory() == TravelerCategory.SENIOR)
 //                && zeroGravityExperience.hasTravelerBooked(traveler.getId())) {
 //                zeroGravityExperience.book(id);
 //                earnOneTimeBadge(Badge.MINI_ZERO_G);

@@ -20,18 +20,27 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class BookingTest {
     private static final BookingId ANY_BOOKING_ID = new BookingId("id-123");
+
     private static final CabinType ANY_CABIN_TYPE = CabinType.DELUXE;
+
     private static final LocalDateTime ANY_LOCAL_DEPARTURE_DATE_TIME = LocalDateTime.of(2012, 3, 3, 0, 0);
+
     private static final CruiseDateTime ANY_DEPARTURE_DATE_TIME = new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME);
-    private static final CruiseDateTime ANY_DATE_TIME_BEFORE_DEPARTURE = new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.minusHours(1));
+
+    private static final CruiseDateTime ANY_DATE_TIME_BEFORE_DEPARTURE =
+            new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.minusHours(1));
+
     @Mock
     private Traveler aTravelerMock;
+
     @Mock
     private Traveler anotherTravelerMock;
+
     @Test
-    void givenBookingWithoutTravelerAndDateTimeBeforeCruiseDeparture_whenValidate_thenThrowNoTravelerToBookException(){
+    void givenBookingWithoutTravelerAndDateTimeBeforeCruiseDeparture_whenValidate_thenThrowNoTravelerToBookException() {
         List<Traveler> noTraveler = new ArrayList<>();
-        Booking bookingWithoutTraveler = new Booking(ANY_BOOKING_ID, noTraveler, ANY_CABIN_TYPE, ANY_DATE_TIME_BEFORE_DEPARTURE);
+        Booking bookingWithoutTraveler = new Booking(ANY_BOOKING_ID, noTraveler, ANY_CABIN_TYPE,
+                ANY_DATE_TIME_BEFORE_DEPARTURE);
 
         Executable validate = () -> bookingWithoutTraveler.validate(ANY_DEPARTURE_DATE_TIME);
 
@@ -39,10 +48,12 @@ class BookingTest {
     }
 
     @Test
-    void givenAtLeastOneTravelerAndBookingDateTimeAfterCruiseDeparture_whenValidate_thenThrowInvalidBookingDateException(){
+    void givenBookingAfterDeparture_whenValidate_thenThrowException() {
         List<Traveler> anyTravelers = new ArrayList<>(List.of(aTravelerMock, anotherTravelerMock));
-        CruiseDateTime anyBookingDateTimeAfterCruiseDeparture = new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.plusHours(1));
-        Booking bookingWithBookingDateTimeAfterCruiseDeparture = new Booking(ANY_BOOKING_ID, anyTravelers, ANY_CABIN_TYPE, anyBookingDateTimeAfterCruiseDeparture);
+        CruiseDateTime anyBookingDateTimeAfterCruiseDeparture =
+                new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.plusHours(1));
+        Booking bookingWithBookingDateTimeAfterCruiseDeparture = new Booking(ANY_BOOKING_ID, anyTravelers,
+                ANY_CABIN_TYPE, anyBookingDateTimeAfterCruiseDeparture);
 
         Executable validate = () -> bookingWithBookingDateTimeAfterCruiseDeparture.validate(ANY_DEPARTURE_DATE_TIME);
 
@@ -50,9 +61,10 @@ class BookingTest {
     }
 
     @Test
-    void givenAtLeastOneTravelerAndDateTimeBeforeCruiseDeparture_whenValidate_thenDoNotThrow(){
+    void givenAtLeastOneTravelerAndDateTimeBeforeCruiseDeparture_whenValidate_thenDoNotThrow() {
         List<Traveler> anyTravelers = new ArrayList<>(List.of(aTravelerMock, anotherTravelerMock));
-        Booking validBooking = new Booking(ANY_BOOKING_ID, anyTravelers, ANY_CABIN_TYPE, ANY_DATE_TIME_BEFORE_DEPARTURE);
+        Booking validBooking = new Booking(ANY_BOOKING_ID, anyTravelers, ANY_CABIN_TYPE,
+                ANY_DATE_TIME_BEFORE_DEPARTURE);
 
         Executable validate = () -> validBooking.validate(ANY_DEPARTURE_DATE_TIME);
 

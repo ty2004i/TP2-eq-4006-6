@@ -31,12 +31,19 @@ import java.util.Map;
 
 public class UspaceMain implements Runnable {
     private static final int PORT = 8181;
+
     private static final String DEFAULT_CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
+
     private static final LocalDateTime DEFAULT_CRUISE_DEPARTURE_DATE = LocalDateTime.of(2085, 1, 25, 12, 0);
+
     private static final LocalDateTime DEFAULT_CRUISE_END_DATE = LocalDateTime.of(2085, 2, 1, 12, 0);
+
     private static final int DEFAULT_STANDARD_CABINS = 10;
+
     private static final int DEFAULT_DELUXE_CABINS = 150;
+
     private static final int DEFAULT_SUITE_CABINS = 3;
+
     private static final int DEFAULT_ZERO_GRAVITY_EXPERIENCE_CAPACITY = 10;
 
     private final Logger logger = LoggerFactory.getLogger(UspaceMain.class);
@@ -89,8 +96,10 @@ public class UspaceMain implements Runnable {
                                                   CabinType.DELUXE, DEFAULT_DELUXE_CABINS,
                                                   CabinType.SUITE, DEFAULT_SUITE_CABINS))),
                                    new CruiseBookings(new CruiseBookingsId(), new HashMap<>()),
-                                   new ZeroGravityExperience(new ZeroGravityExperienceId(), DEFAULT_ZERO_GRAVITY_EXPERIENCE_CAPACITY),
-                                   new HyperdriveInventory(new HyperdriveInventoryId(), new ArrayList < > (), new HyperdriveModuleIdValidatorHYStandard()));
+                                   new ZeroGravityExperience(new ZeroGravityExperienceId(),
+                                           DEFAULT_ZERO_GRAVITY_EXPERIENCE_CAPACITY),
+                                   new HyperdriveInventory(new HyperdriveInventoryId(),
+                                           new ArrayList < > (), new HyperdriveModuleIdValidatorHYStandard()));
 
         cruiseRepository.save(cruise);
     }

@@ -26,8 +26,7 @@ public abstract class Traveler {
 
     }
 
-    protected Traveler(TravelerId id, TravelerName name, TravelerCategory category, List<Badge> badges)
-    {
+    protected Traveler(TravelerId id, TravelerName name, TravelerCategory category, List<Badge> badges) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -56,8 +55,7 @@ public abstract class Traveler {
     public abstract boolean canAccompagnyChildForZeroGravityExperience(ZeroGravityExperience zeroGravityExperience);
 
     protected void earnOneTimeBadge(Badge badge) {
-        if (!badges.contains(badge))
-        {
+        if (!badges.contains(badge)) {
             badges.add(badge);
         }
     }

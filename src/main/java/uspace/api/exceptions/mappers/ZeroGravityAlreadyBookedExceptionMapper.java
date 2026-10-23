@@ -7,7 +7,8 @@ import uspace.api.exceptions.ErrorResponse;
 import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperienceAlreadyBookedException;
 
 @Provider
-public class ZeroGravityAlreadyBookedExceptionMapper implements ExceptionMapper<ZeroGravityExperienceAlreadyBookedException> {
+public class ZeroGravityAlreadyBookedExceptionMapper
+    implements ExceptionMapper<ZeroGravityExperienceAlreadyBookedException> {
 
     @Override
     public Response toResponse(ZeroGravityExperienceAlreadyBookedException exception) {

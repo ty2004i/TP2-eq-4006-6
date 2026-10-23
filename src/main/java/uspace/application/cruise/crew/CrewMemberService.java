@@ -5,7 +5,11 @@ import uspace.application.cruise.crew.dtos.CrewMemberDto;
 import uspace.domain.cruise.Cruise;
 import uspace.domain.cruise.CruiseId;
 import uspace.domain.cruise.CruiseRepository;
+import uspace.domain.cruise.booking.traveler.TravelerName;
+import uspace.domain.cruise.crew.CrewMember;
 import uspace.domain.cruise.exceptions.CruiseNotFoundException;
+import uspace.domain.cruise.crew.CrewMember;
+import uspace.domain.cruise.booking.traveler.TravelerName;
 
 public class CrewMemberService {
 
@@ -22,7 +26,11 @@ public class CrewMemberService {
             throw new CruiseNotFoundException();
         }
 
-        cruise.addCrewMember(crewMemberDto);
+        CrewMember crewMember = new CrewMember(
+                crewMemberDto.employeeId,
+                new TravelerName(crewMemberDto.name));
+
+        cruise.addCrewMember(crewMember);
         cruiseRepository.save(cruise);
     }
 }

@@ -12,10 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class ZeroGravityExperienceTest {
 
     private static final ZeroGravityExperienceId ANY_ZERO_GRAVITY_EXPERIENCE_ID = new ZeroGravityExperienceId();
+
     private static final int ANY_CAPACITY = 3;
+
     private static final String ANY_TRAVELER_ID_STR = "ANY_TRAVELER_ID";
+
     private static final TravelerId ANY_TRAVELER_ID = new TravelerId(ANY_TRAVELER_ID_STR);
+
     private static final TravelerId ANY_SAME_TRAVELER_ID = new TravelerId(ANY_TRAVELER_ID_STR);
+
     private ZeroGravityExperience zeroGravityExperience;
 
     @BeforeEach
@@ -33,7 +38,7 @@ class ZeroGravityExperienceTest {
     }
 
     @Test
-    void givenZeroGravityExperienceFullAndTravelerNotAlreadyBooked_whenBook_thenThrowZeroGravityExperienceFullException() {
+    void givenFullExperienceAndNewTraveler_whenBooking_thenThrowsFullException() {
         bookAsMuchTravelersAsCapacity();
 
         Executable bookZeroGravityExperienceAgain = () -> zeroGravityExperience.book(ANY_TRAVELER_ID);

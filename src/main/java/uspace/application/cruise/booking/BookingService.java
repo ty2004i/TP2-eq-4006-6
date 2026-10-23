@@ -20,12 +20,16 @@ import java.time.LocalDateTime;
 public class BookingService {
 
     private final CruiseRepository cruiseRepository;
+
     private final BookingFactory bookingFactory;
+
     private final BookingAssembler bookingAssembler;
+
     private final LocalDateTimeParser localDateTimeParser;
 
     @Inject
-    public BookingService(CruiseRepository cruiseRepository, BookingFactory bookingFactory, BookingAssembler bookingAssembler,
+    public BookingService(CruiseRepository cruiseRepository, BookingFactory bookingFactory,
+            BookingAssembler bookingAssembler,
                           LocalDateTimeParser localDateTimeParser) {
         this.cruiseRepository = cruiseRepository;
         this.bookingFactory = bookingFactory;

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 
 public class TravelerService {
     private final CruiseRepository cruiseRepository;
+
     private final LocalDateTimeParser localDateTimeParser;
 
     @Inject
@@ -22,7 +23,8 @@ public class TravelerService {
         this.localDateTimeParser = localDateTimeParser;
     }
 
-    public void bookZeroGravityExperience(String cruiseId, String bookingIdStr, String travelerIdStr, String experienceBookingDateTime) {
+    public void bookZeroGravityExperience(String cruiseId, String bookingIdStr, String travelerIdStr,
+            String experienceBookingDateTime) {
         Cruise cruise = cruiseRepository.findById(new CruiseId(cruiseId));
         if (cruise == null) {
             throw new CruiseNotFoundException();

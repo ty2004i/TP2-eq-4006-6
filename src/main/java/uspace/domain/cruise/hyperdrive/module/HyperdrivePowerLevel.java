@@ -22,4 +22,4 @@ public class HyperdrivePowerLevel {
         }
         HyperdrivePowerLevel other = (HyperdrivePowerLevel) obj;
         return this.powerLevel == other.powerLevel;
-    }}
+    } }

@@ -18,6 +18,7 @@ public class HyperdriveModuleFactory {
         LocalDateTime activationDateTime = activationDate.atTime(activationTime);
         LocalDateTime deactivationDateTime = activationDateTime.plusDays(activationDays);
 
-        return new HyperdriveModule(new HyperdriveModuleId(id), new HyperdrivePowerLevel(powerLevel), new CruiseDateTime(activationDateTime), new CruiseDateTime(deactivationDateTime));
+        return new HyperdriveModule(new HyperdriveModuleId(id), new HyperdrivePowerLevel(powerLevel),
+                new CruiseDateTime(activationDateTime), new CruiseDateTime(deactivationDateTime));
     }
 }

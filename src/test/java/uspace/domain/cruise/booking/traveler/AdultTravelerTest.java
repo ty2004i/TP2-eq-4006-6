@@ -17,10 +17,15 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class AdultTravelerTest {
     private static final TravelerId ANY_ID = new TravelerId();
+
     private static final TravelerName ANY_NAME = new TravelerName("Bob");
+
     private static final List<Badge> ANY_BADGES = new ArrayList<>();
+
     private static final List<Traveler> ANY_TRAVELERS_IN_BOOKING = List.of();
+
     private AdultTraveler adultTraveler;
+
     @Mock
     private ZeroGravityExperience zeroGravityExperience;
 
@@ -63,7 +68,8 @@ class AdultTravelerTest {
 
         adultTravelerWithZeroGBadge.bookZeroGravityExperience(zeroGravityExperience, ANY_TRAVELERS_IN_BOOKING);
 
-        int numberOfZeroGBadges = (int) adultTravelerWithZeroGBadge.getBadges().stream().filter(Badge.ZERO_G::equals).count();
+        int numberOfZeroGBadges =
+                (int) adultTravelerWithZeroGBadge.getBadges().stream().filter(Badge.ZERO_G::equals).count();
         assertEquals(expectedNumberOfZeroGBadges, numberOfZeroGBadges);
     }
 }

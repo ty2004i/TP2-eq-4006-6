@@ -1,39 +1,32 @@
 package uspace.domain.cruise.crew;
 
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import uspace.domain.cruise.booking.traveler.Traveler;
-import uspace.domain.cruise.booking.traveler.TravelerCategory;
 import uspace.domain.cruise.booking.traveler.TravelerName;
-import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
-
-import java.util.List;
 
 @Entity
-public class CrewMember extends Traveler {
-    @Id
-    protected String employeeId;
+public class CrewMember {
 
-    public CrewMember() {
+    @EmbeddedId
+    private EmployeeId employeeId;
+
+    @Embedded
+    private TravelerName name;
+
+    protected CrewMember() {
     }
 
     public CrewMember(String employeeId, TravelerName name) {
-        super(null, name, TravelerCategory.CREW_MEMBER, null);
-        this.employeeId = employeeId;
-    }
-
-    @Override
-    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience,
-                                          List<Traveler> travelersInBooking) {
-        throw new UnsupportedOperationException("Crew members cannot book zero gravity experiences!!!");
-    }
-
-    @Override
-    public boolean canAccompagnyChildForZeroGravityExperience(ZeroGravityExperience zeroGravityExperience) {
-        return false;
+        this.employeeId = new EmployeeId(employeeId);
+        this.name = name;
     }
 
     public String getEmployeeId() {
-        return employeeId;
+        return employeeId.toString();
+    }
+
+    public TravelerName getName() {
+        return name;
     }
 }

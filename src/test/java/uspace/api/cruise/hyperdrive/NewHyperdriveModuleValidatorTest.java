@@ -12,9 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NewHyperdriveModuleValidatorTest {
     private static final String ANY_ID = "AAA";
+
     private static final int ANY_POSITIVE_POWER_LEVEL = 4;
+
     private static final int ANY_POSITIVE_ACTIVATION_DAYS = 80;
+
     private static final String ANY_ACTIVATION_DATE = "2084-04-08";
+
     private NewHyperdriveModuleValidator newHyperdriveModuleValidator;
 
     @BeforeEach
@@ -24,7 +28,8 @@ class NewHyperdriveModuleValidatorTest {
 
     @Test
     void givenNewHyperdriveModuleWithoutId_whenValidate_thenThrowMissingParameterException() {
-        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(null, ANY_POSITIVE_POWER_LEVEL, ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
+        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(null,
+                ANY_POSITIVE_POWER_LEVEL, ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
 
         Executable validate = () -> newHyperdriveModuleValidator.validate(newHyperdriveModuleDto);
 
@@ -33,7 +38,8 @@ class NewHyperdriveModuleValidatorTest {
 
     @Test
     void givenNewHyperdriveModuleWithoutPowerLevel_whenValidate_thenThrowMissingParameterException() {
-        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID, 0, ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
+        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID, 0,
+                ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
 
         Executable validate = () -> newHyperdriveModuleValidator.validate(newHyperdriveModuleDto);
 
@@ -43,7 +49,8 @@ class NewHyperdriveModuleValidatorTest {
     @Test
     void givenNewHyperdriveModuleWithNegativePowerLevel_whenValidate_thenThrowInvalidParameterException() {
         int anyNegativePowerLevel = -1;
-        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID, anyNegativePowerLevel, ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
+        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID,
+                anyNegativePowerLevel, ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
 
         Executable validate = () -> newHyperdriveModuleValidator.validate(newHyperdriveModuleDto);
 
@@ -52,7 +59,8 @@ class NewHyperdriveModuleValidatorTest {
 
     @Test
     void givenNewHyperdriveModuleWithoutActivationDays_whenValidate_thenThrowMissingParameterException() {
-        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID, ANY_POSITIVE_POWER_LEVEL, 0, ANY_ACTIVATION_DATE);
+        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID,
+                ANY_POSITIVE_POWER_LEVEL, 0, ANY_ACTIVATION_DATE);
 
         Executable validate = () -> newHyperdriveModuleValidator.validate(newHyperdriveModuleDto);
 
@@ -62,7 +70,8 @@ class NewHyperdriveModuleValidatorTest {
     @Test
     void givenNewHyperdriveModuleWithoutActivationDays_whenValidate_thenThrowInvalidParameterException() {
         int anyNegativeActivationDays = -8;
-        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID, ANY_POSITIVE_POWER_LEVEL, anyNegativeActivationDays, ANY_ACTIVATION_DATE);
+        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID,
+                ANY_POSITIVE_POWER_LEVEL, anyNegativeActivationDays, ANY_ACTIVATION_DATE);
 
         Executable validate = () -> newHyperdriveModuleValidator.validate(newHyperdriveModuleDto);
 
@@ -71,7 +80,8 @@ class NewHyperdriveModuleValidatorTest {
 
     @Test
     void givenNewHyperdriveModuleWithoutActivationDate_whenValidate_thenThrowMissingParameterException() {
-        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID, ANY_POSITIVE_POWER_LEVEL, ANY_POSITIVE_ACTIVATION_DAYS, null);
+        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID,
+                ANY_POSITIVE_POWER_LEVEL, ANY_POSITIVE_ACTIVATION_DAYS, null);
 
         Executable validate = () -> newHyperdriveModuleValidator.validate(newHyperdriveModuleDto);
 
@@ -80,7 +90,8 @@ class NewHyperdriveModuleValidatorTest {
 
     @Test
     void givenNewHyperdriveModuleWithAllParametersPresentAndValid_whenValidate_thenDoNothing() {
-        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID, ANY_POSITIVE_POWER_LEVEL, ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
+        NewHyperdriveModuleDto newHyperdriveModuleDto = new NewHyperdriveModuleDto(ANY_ID,
+                ANY_POSITIVE_POWER_LEVEL, ANY_POSITIVE_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
 
         Executable validate = () -> newHyperdriveModuleValidator.validate(newHyperdriveModuleDto);
 

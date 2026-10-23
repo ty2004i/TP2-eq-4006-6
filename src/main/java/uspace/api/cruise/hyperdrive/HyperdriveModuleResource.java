@@ -13,10 +13,12 @@ import uspace.application.cruise.hyperdrive.dtos.NewHyperdriveModuleDto;
 public class HyperdriveModuleResource {
 
     private final HyperdriveModuleService hyperdriveModuleService;
+
     private final NewHyperdriveModuleValidator newHyperdriveModuleValidator;
 
     @Inject
-    public HyperdriveModuleResource(HyperdriveModuleService hyperdriveModuleService, NewHyperdriveModuleValidator newHyperdriveModuleValidator) {
+    public HyperdriveModuleResource(HyperdriveModuleService hyperdriveModuleService,
+            NewHyperdriveModuleValidator newHyperdriveModuleValidator) {
         this.hyperdriveModuleService = hyperdriveModuleService;
         this.newHyperdriveModuleValidator = newHyperdriveModuleValidator;
     }

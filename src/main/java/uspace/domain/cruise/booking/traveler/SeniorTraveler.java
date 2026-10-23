@@ -5,6 +5,7 @@ import uspace.domain.cruise.booking.traveler.badge.Badge;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 
 import java.util.List;
+
 @Entity
 public class SeniorTraveler extends Traveler {
 
@@ -16,7 +17,8 @@ public class SeniorTraveler extends Traveler {
     }
 
     @Override
-    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience, List<Traveler> travelersInBooking) {
+    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience,
+            List<Traveler> travelersInBooking) {
         zeroGravityExperience.book(id);
         earnOneTimeBadge(Badge.ZERO_G);
         earnOneTimeBadge(Badge.STILL_GOT_IT);
