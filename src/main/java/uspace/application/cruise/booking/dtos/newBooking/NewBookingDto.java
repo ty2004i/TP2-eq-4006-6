@@ -4,7 +4,9 @@ import java.util.List;
 
 public class NewBookingDto {
     public String cabinType;
+
     public List<NewBookingTravelerDto> travelers;
+
     public String bookingDateTime;
 
     public NewBookingDto() {

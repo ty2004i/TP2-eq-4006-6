@@ -30,11 +30,13 @@ import java.time.format.DateTimeFormatter;
 
 public class ConfigurationServerRest extends AbstractBinder {
     private final static String LOCAL_DATE_FORMAT = "yyyy-MM-dd";
-    private final static LocalTime HYPERDRIVE_ACTIVATION_TIME = LocalTime.of(1,0,0);
+
+    private final static LocalTime HYPERDRIVE_ACTIVATION_TIME = LocalTime.of(1, 0, 0);
 
     @Override
     protected void configure() {
-        bind(new StandardHyperdriveStabilityValidator(new StandardHyperdriveStabilitySystem())).to(HyperdriveStabilityValidator.class);
+        bind(new StandardHyperdriveStabilityValidator(new
+                StandardHyperdriveStabilitySystem())).to(HyperdriveStabilityValidator.class);
 
         bindAsContract(TravelerFactory.class);
         bindAsContract(BookingFactory.class);

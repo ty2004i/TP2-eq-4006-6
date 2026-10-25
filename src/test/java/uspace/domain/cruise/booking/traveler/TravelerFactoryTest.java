@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TravelerFactoryTest {
 
     private static final String ANY_NAME = "Bob";
+
     private TravelerFactory travelerFactory;
 
     @BeforeEach

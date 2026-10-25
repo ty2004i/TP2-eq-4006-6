@@ -28,6 +28,7 @@ public class BookingFactory {
     }
 
     private List<Traveler> createTravelers(List<NewBookingTraveler> travelers) {
-        return travelers.stream().map(traveler -> travelerFactory.create(traveler.name(), TravelerCategory.fromString(traveler.category()))).toList();
+        return travelers.stream().map(traveler -> travelerFactory.create(traveler.name(),
+                TravelerCategory.fromString(traveler.category()))).toList();
     }
 }

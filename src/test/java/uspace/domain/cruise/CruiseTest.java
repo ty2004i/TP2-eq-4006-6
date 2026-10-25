@@ -29,24 +29,41 @@ import static org.mockito.Mockito.when;
 class CruiseTest {
 
     private static final CruiseId ANY_CRUISE_ID = new CruiseId("ANY_CRUISE_ID");
+
     private static final LocalDateTime ANY_LOCAL_DEPARTURE_DATE_TIME = LocalDateTime.now();
+
     private static final CruiseDateTime ANY_DEPARTURE_DATE_TIME = new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME);
-    private static final CruiseDateTime ANY_END_DATE_TIME = new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.plusDays(1));
-    private static final CruiseDateTime ANY_DATE_TIME_BEFORE_DEPARTURE = new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.minusHours(1));
-    private static final CruiseDateTime ANY_DATE_TIME_AFTER_DEPARTURE = new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.plusHours(1));
+
+    private static final CruiseDateTime ANY_END_DATE_TIME =
+            new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.plusDays(1));
+
+    private static final CruiseDateTime ANY_DATE_TIME_BEFORE_DEPARTURE =
+            new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.minusHours(1));
+
+    private static final CruiseDateTime ANY_DATE_TIME_AFTER_DEPARTURE =
+            new CruiseDateTime(ANY_LOCAL_DEPARTURE_DATE_TIME.plusHours(1));
+
     private static final BookingId ANY_BOOKING_ID = new BookingId("ANY_BOOKING_ID");
+
     private static final TravelerId ANY_TRAVELER_ID = new TravelerId();
+
     private Cruise cruise;
+
     @Mock
     private CruiseBookings cruiseBookingsMock;
+
     @Mock
     private CabinAvailabilities cabinAvailabilitiesMock;
+
     @Mock
     private ZeroGravityExperience zeroGravityExperienceMock;
+
     @Mock
     private Booking bookingMock;
+
     @Mock
     private HyperdriveInventory hyperdriveInventoryMock;
+
     @Mock
     private HyperdriveModule hyperdriveModuleMock;
 
@@ -57,7 +74,7 @@ class CruiseTest {
     }
 
     @Test
-    void givenExperienceBookingDateTimeAfterDeparture_whenBookZeroGravityExperience_thenThrowZeroGravityExperienceBookingTimeException() {
+    void givenBookingAfterDeparture_whenBooking_thenThrowsTimeException() {
         Executable bookZeroGravityExperience = () ->
                 cruise.bookZeroGravityExperience(ANY_BOOKING_ID, ANY_TRAVELER_ID, ANY_DATE_TIME_AFTER_DEPARTURE);
 
@@ -65,7 +82,7 @@ class CruiseTest {
     }
 
     @Test
-    void givenExperienceBookingDateTimeBeforeDepartureAndNonExistingBookingId_whenBookZeroGravityExperience_thenThrowTravelerNotFoundException() {
+    void givenUnknownTraveler_whenBookingBeforeDeparture_thenThrowsNotFound() {
         Executable bookZeroGravityExperience = () ->
                 cruise.bookZeroGravityExperience(ANY_BOOKING_ID, ANY_TRAVELER_ID, ANY_DATE_TIME_BEFORE_DEPARTURE);
 
@@ -73,7 +90,7 @@ class CruiseTest {
     }
 
     @Test
-    void givenExperienceBookingDateTimeBeforeDepartureAndExistingBookingId_whenBookZeroGravityExperience_thenBookingBookZeroGravityExperience() {
+    void givenExistingTraveler_whenBookingBeforeDeparture_thenBookingRecorded() {
         when(cruiseBookingsMock.findById(ANY_BOOKING_ID)).thenReturn(bookingMock);
 
         cruise.bookZeroGravityExperience(ANY_BOOKING_ID, ANY_TRAVELER_ID, ANY_DATE_TIME_BEFORE_DEPARTURE);
@@ -82,7 +99,7 @@ class CruiseTest {
     }
 
     @Test
-    void givenHyperdriveModuleNotActivatedDuringCruiseTime_whenAddHyperdriveModule_thenThrowInvalidHyperdriveModuleActivationDateException() {
+    void givenModuleOutsideCruise_whenAdding_thenThrowsActivationException() {
         when(hyperdriveModuleMock.isActivationBetween(ANY_DEPARTURE_DATE_TIME, ANY_END_DATE_TIME)).thenReturn(false);
 
         Executable addHyperdriveModule = () -> cruise.addHyperdriveModule(hyperdriveModuleMock);

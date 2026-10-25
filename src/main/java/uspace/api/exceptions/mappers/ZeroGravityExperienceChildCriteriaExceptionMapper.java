@@ -7,7 +7,8 @@ import uspace.api.exceptions.ErrorResponse;
 import uspace.domain.cruise.booking.traveler.exceptions.ZeroGravityExperienceChildCriteriaException;
 
 @Provider
-public class ZeroGravityExperienceChildCriteriaExceptionMapper implements ExceptionMapper<ZeroGravityExperienceChildCriteriaException> {
+public class ZeroGravityExperienceChildCriteriaExceptionMapper
+    implements ExceptionMapper<ZeroGravityExperienceChildCriteriaException> {
 
     @Override
     public Response toResponse(ZeroGravityExperienceChildCriteriaException exception) {

@@ -3,8 +3,11 @@ package uspace.application.cruise.hyperdrive.dtos;
 public class HyperdriveModuleDto {
 
     public String id;
+
     public int powerLevel;
+
     public String activationDateTime;
+
     public String deactivationDateTime;
 
 

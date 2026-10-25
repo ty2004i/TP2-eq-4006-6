@@ -6,7 +6,9 @@ public class BookingTravelerDto {
     public String id;
 
     public String name;
+
     public String category;
+
     public List<String> badges;
 
     public BookingTravelerDto() {

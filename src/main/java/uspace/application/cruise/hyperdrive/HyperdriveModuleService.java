@@ -16,8 +16,11 @@ import java.time.LocalDate;
 
 public class HyperdriveModuleService {
     private final CruiseRepository cruiseRepository;
+
     private final HyperdriveStabilityValidator hyperdriveStabilityValidator;
+
     private final HyperdriveModuleFactory hyperdriveModuleFactory;
+
     private final LocalDateParser localDateParser;
 
     @Inject
@@ -37,12 +40,13 @@ public class HyperdriveModuleService {
             throw new CruiseNotFoundException();
         }
 
-        if (!hyperdriveStabilityValidator.isHyperdriveModuleStable(newHyperdriveModuleDto.id)){
+        if (!hyperdriveStabilityValidator.isHyperdriveModuleStable(newHyperdriveModuleDto.id)) {
             throw new InvalidHyperdriveModuleException();
         }
 
         LocalDate activationDate = localDateParser.parse(newHyperdriveModuleDto.activationDate);
-        HyperdriveModule hyperdriveModule = hyperdriveModuleFactory.create(newHyperdriveModuleDto.id, newHyperdriveModuleDto.powerLevel, newHyperdriveModuleDto.activationDays, activationDate);
+        HyperdriveModule hyperdriveModule = hyperdriveModuleFactory.create(newHyperdriveModuleDto.id,
+                newHyperdriveModuleDto.powerLevel, newHyperdriveModuleDto.activationDays, activationDate);
 
         cruise.addHyperdriveModule(hyperdriveModule);
         cruiseRepository.save(cruise);

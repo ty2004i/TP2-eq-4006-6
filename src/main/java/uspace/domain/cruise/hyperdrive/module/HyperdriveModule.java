@@ -8,19 +8,22 @@ import uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleId;
 public class HyperdriveModule {
     @Id
     private HyperdriveModuleId id;
+
     @Embedded
     private HyperdrivePowerLevel powerLevel;
+
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(
+        @AttributeOverride(
                     name = "localDateTime",
                     column = @Column(name = "activationDateTime")
             ),
     })
     private CruiseDateTime activationDateTime;
+
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(
+        @AttributeOverride(
                     name = "localDateTime",
                     column = @Column(name = "deactivationDateTime")
             ),
@@ -64,7 +67,8 @@ public class HyperdriveModule {
     }
 
     public boolean hasSameActivationPeriodThan(HyperdriveModule hyperdriveModule) {
-        return isDuringActivation(hyperdriveModule.activationDateTime) || isDuringActivation(hyperdriveModule.deactivationDateTime);
+        return isDuringActivation(hyperdriveModule.activationDateTime) ||
+                isDuringActivation(hyperdriveModule.deactivationDateTime);
     }
 
     private boolean isDuringActivation(CruiseDateTime dateTime) {

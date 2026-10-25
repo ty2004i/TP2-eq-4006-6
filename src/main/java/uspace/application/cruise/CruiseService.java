@@ -10,6 +10,7 @@ import uspace.domain.cruise.exceptions.CruiseNotFoundException;
 public class CruiseService {
 
     private final CruiseRepository cruiseRepository;
+
     private final CruiseAssembler cruiseAssembler;
 
     @Inject

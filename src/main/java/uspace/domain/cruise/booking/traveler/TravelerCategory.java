@@ -5,8 +5,7 @@ import uspace.domain.cruise.booking.traveler.exceptions.InvalidTravelerCategoryE
 public enum TravelerCategory {
     ADULT("adult"),
     CHILD("child"),
-    SENIOR("senior"),
-    CREW_MEMBER("crew member");
+    SENIOR("senior");
 
     private final String type;
 

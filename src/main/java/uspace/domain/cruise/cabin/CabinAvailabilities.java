@@ -11,7 +11,7 @@ public class CabinAvailabilities {
     private CabinAvailabilitiesId id;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    public Map<CabinType, Integer> availibilitiesByCabinType;
+    private Map<CabinType, Integer> availibilitiesByCabinType;
 
     public CabinAvailabilities() {
 

@@ -3,7 +3,6 @@ package uspace.domain.cruise;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import uspace.application.cruise.crew.dtos.CrewMemberDto;
 import uspace.domain.cruise.booking.Booking;
 import uspace.domain.cruise.booking.BookingId;
 import uspace.domain.cruise.booking.CruiseBookings;
@@ -12,10 +11,8 @@ import uspace.domain.cruise.booking.traveler.TravelerName;
 import uspace.domain.cruise.booking.traveler.exceptions.TravelerNotFoundException;
 import uspace.domain.cruise.cabin.CabinAvailabilities;
 import uspace.domain.cruise.cabin.CabinType;
-import uspace.domain.cruise.cabin.exceptions.CabinTypeNotAvailableException;
 import uspace.domain.cruise.crew.CrewMember;
 import uspace.domain.cruise.crew.exceptions.CrewMemberAlreadyInCruiseException;
-import uspace.domain.cruise.crew.exceptions.InvalidEmployeeIdFormatException;
 import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModule;
@@ -35,19 +32,13 @@ public class Cruise {
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(
-                name = "localDateTime",
-                column = @Column(name = "departureDateTime")
-        ),
+        @AttributeOverride(name = "localDateTime", column = @Column(name = "departureDateTime")),
     })
     private CruiseDateTime departureDateTime;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(
-                    name = "localDateTime",
-                    column = @Column(name = "endDateTime")
-            ),
+        @AttributeOverride(name = "localDateTime", column = @Column(name = "endDateTime")),
     })
     private CruiseDateTime endDateTime;
 
@@ -74,8 +65,10 @@ public class Cruise {
 
     }
 
-    public Cruise(CruiseId id, CruiseDateTime departureDateTime, CruiseDateTime endDateTime, CabinAvailabilities cabinAvailabilities,
-                  CruiseBookings cruiseBookings, ZeroGravityExperience zeroGravityExperience, HyperdriveInventory hyperdriveInventory) {
+    public Cruise(CruiseId id, CruiseDateTime departureDateTime, CruiseDateTime endDateTime,
+            CabinAvailabilities cabinAvailabilities,
+            CruiseBookings cruiseBookings, ZeroGravityExperience zeroGravityExperience,
+            HyperdriveInventory hyperdriveInventory) {
         this.id = id;
         this.departureDateTime = departureDateTime;
         this.endDateTime = endDateTime;
@@ -112,7 +105,8 @@ public class Cruise {
         return cruiseBookings.findById(bookingId);
     }
 
-    public void bookZeroGravityExperience(BookingId bookingId, TravelerId travelerId, CruiseDateTime experienceBookingDateTime) {
+    public void bookZeroGravityExperience(BookingId bookingId, TravelerId travelerId,
+            CruiseDateTime experienceBookingDateTime) {
         if (experienceBookingDateTime.isAfter(departureDateTime)) {
             throw new ZeroGravityExperienceBookingTimeException();
         }
@@ -132,24 +126,14 @@ public class Cruise {
 
         hyperdriveInventory.addHyperdriveModule(hyperdriveModule);
     }
-    public void addCrewMember(CrewMemberDto newCrewMemberDto) {
 
-        if (crewMembers.get(newCrewMemberDto.employeeId) != null) {
+    public void addCrewMember(CrewMember crewMember) {
+        if (crewMembers.containsKey(crewMember.getEmployeeId())) {
             throw new CrewMemberAlreadyInCruiseException();
         }
 
-        if (!newCrewMemberDto.employeeId.matches("^[A-Z]{3}[0-9]{3}$")) {
-            throw new InvalidEmployeeIdFormatException();
-        }
-
-        if (cabinAvailabilities.availibilitiesByCabinType.getOrDefault(CabinType.STANDARD, 0) <= 0) {
-            throw new CabinTypeNotAvailableException();
-        } else {
-            cabinAvailabilities.availibilitiesByCabinType.put(CabinType.STANDARD, cabinAvailabilities.availibilitiesByCabinType.get(CabinType.STANDARD) - 1);
-        }
-
-        CrewMember newCrewMember = new CrewMember(newCrewMemberDto.employeeId, new TravelerName(newCrewMemberDto.name));
-        crewMembers.put(newCrewMember.getEmployeeId(), newCrewMember);
+        cabinAvailabilities.bookCabin(CabinType.STANDARD);
+        crewMembers.put(crewMember.getEmployeeId(), crewMember);
     }
 
     public List<CrewMember> getCrewMembers() {

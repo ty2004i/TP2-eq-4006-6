@@ -26,53 +26,72 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class HyperdriveModuleServiceTest {
     private static final String ANY_CRUISE_ID_STR = "ANY_CRUISE_ID";
+
     private static final CruiseId ANY_CRUISE_ID = new CruiseId(ANY_CRUISE_ID_STR);
+
     private static final String ANY_HYPERDRIVE_MODULE_ID = "ANY_HYPERDRIVE_MODULE_ID";
+
     private static final int ANY_POWER_LEVEL = 15;
+
     private static final int ANY_ACTIVATION_DAYS = 40;
+
     private static final String ANY_ACTIVATION_DATE = "1999-02-03";
-    private static final LocalDate ANY_ACTIVATION_LOCAL_DATE = LocalDate.of(1999,2,3);
-    private static final NewHyperdriveModuleDto ANY_NEW_HYPERDRIVE_MODULE_DTO = new NewHyperdriveModuleDto(ANY_HYPERDRIVE_MODULE_ID, ANY_POWER_LEVEL, ANY_ACTIVATION_DAYS, ANY_ACTIVATION_DATE);
+
+    private static final LocalDate ANY_ACTIVATION_LOCAL_DATE = LocalDate.of(1999, 2, 3);
+
+    private static final NewHyperdriveModuleDto ANY_NEW_HYPERDRIVE_MODULE_DTO =
+            new NewHyperdriveModuleDto(ANY_HYPERDRIVE_MODULE_ID, ANY_POWER_LEVEL, ANY_ACTIVATION_DAYS,
+                    ANY_ACTIVATION_DATE);
+
     private HyperdriveModuleService hyperdriveModuleService;
+
     @Mock
     private CruiseRepository cruiseRepositoryMock;
+
     @Mock
     private HyperdriveStabilityValidator hyperdriveStabilityValidatorMock;
+
     @Mock
     private HyperdriveModuleFactory hyperdriveModuleFactoryMock;
+
     @Mock
     private LocalDateParser localDateParserMock;
+
     @Mock
     private Cruise cruiseMock;
+
     @Mock
     private HyperdriveModule hyperdriveModuleMock;
 
     @BeforeEach
     void createHyperdriveModuleService() {
-        hyperdriveModuleService = new HyperdriveModuleService(cruiseRepositoryMock, hyperdriveStabilityValidatorMock, hyperdriveModuleFactoryMock, localDateParserMock);
+        hyperdriveModuleService = new HyperdriveModuleService(cruiseRepositoryMock,
+                hyperdriveStabilityValidatorMock, hyperdriveModuleFactoryMock, localDateParserMock);
     }
 
     @Test
-    void givenNonExistingCruise_whenAddHyperdriveModule_thenThrowCruiseNotFoundException(){
+    void givenNonExistingCruise_whenAddHyperdriveModule_thenThrowCruiseNotFoundException() {
         givenNonExistingCruise();
 
-        Executable addHyperdriveModule = () -> hyperdriveModuleService.addHyperdriveModule(ANY_CRUISE_ID_STR, ANY_NEW_HYPERDRIVE_MODULE_DTO);
+        Executable addHyperdriveModule =
+                () -> hyperdriveModuleService.addHyperdriveModule(ANY_CRUISE_ID_STR, ANY_NEW_HYPERDRIVE_MODULE_DTO);
 
         assertThrows(CruiseNotFoundException.class, addHyperdriveModule);
     }
 
     @Test
-    void givenExistingCruiseAndHyperdriveModuleNotStable_whenAddHyperdriveModule_thenThrowInvalidHyperdriveModuleException(){
+    void givenUnstableModule_whenAddHyperdriveModule_thenThrowException() {
         givenExistingCruise();
         givenInvalidHyperdriveModule();
 
-        Executable addHyperdriveModule = () -> hyperdriveModuleService.addHyperdriveModule(ANY_CRUISE_ID_STR, ANY_NEW_HYPERDRIVE_MODULE_DTO);
+        Executable addHyperdriveModule =
+                () -> hyperdriveModuleService.addHyperdriveModule(ANY_CRUISE_ID_STR, ANY_NEW_HYPERDRIVE_MODULE_DTO);
 
         assertThrows(InvalidHyperdriveModuleException.class, addHyperdriveModule);
     }
 
     @Test
-    void givenExistingCruiseAndValidHyperdriveModuleStable_whenAddHyperdriveModule_thenAddToCruise(){
+    void givenExistingCruiseAndValidHyperdriveModuleStable_whenAddHyperdriveModule_thenAddToCruise() {
         givenExistingCruise();
         givenValidHyperdriveModule();
 
@@ -82,7 +101,7 @@ class HyperdriveModuleServiceTest {
     }
 
     @Test
-    void givenExistingCruiseAndValidHyperdriveModuleStable_whenAddHyperdriveModule_thenSaveCruise(){
+    void givenExistingCruiseAndValidHyperdriveModuleStable_whenAddHyperdriveModule_thenSaveCruise() {
         givenExistingCruise();
         givenValidHyperdriveModule();
 
@@ -106,7 +125,8 @@ class HyperdriveModuleServiceTest {
     private void givenValidHyperdriveModule() {
         when(hyperdriveStabilityValidatorMock.isHyperdriveModuleStable(ANY_HYPERDRIVE_MODULE_ID)).thenReturn(true);
         when(localDateParserMock.parse(ANY_ACTIVATION_DATE)).thenReturn(ANY_ACTIVATION_LOCAL_DATE);
-        when(hyperdriveModuleFactoryMock.create(ANY_HYPERDRIVE_MODULE_ID, ANY_POWER_LEVEL, ANY_ACTIVATION_DAYS, ANY_ACTIVATION_LOCAL_DATE)).thenReturn(hyperdriveModuleMock);
+        when(hyperdriveModuleFactoryMock.create(ANY_HYPERDRIVE_MODULE_ID, ANY_POWER_LEVEL,
+                ANY_ACTIVATION_DAYS, ANY_ACTIVATION_LOCAL_DATE)).thenReturn(hyperdriveModuleMock);
     }
 
 }

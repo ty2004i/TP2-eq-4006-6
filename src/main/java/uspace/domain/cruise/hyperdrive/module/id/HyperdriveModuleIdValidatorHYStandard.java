@@ -9,7 +9,7 @@ public class HyperdriveModuleIdValidatorHYStandard extends HyperdriveModuleIdVal
     private static final String REGEX_FOR_HY_STANDARD = "^HY-(?:[1-9]|[1-9][0-9]|[1-9][0-9]{2})-[A-Z]$";
 
     @Override
-    public boolean isValid(HyperdriveModuleId id){
+    public boolean isValid(HyperdriveModuleId id) {
         return id != null && id.toString().matches(REGEX_FOR_HY_STANDARD);
     }
 }

@@ -18,11 +18,17 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class SeniorTravelerTest {
     private static final TravelerId ANY_ID = new TravelerId();
+
     private static final TravelerName ANY_NAME = new TravelerName("Bob");
+
     private static final List<Badge> ANY_BADGES = new ArrayList<>();
+
     private static final List<Badge> NO_BADGE = new ArrayList<>();
+
     private static final List<Traveler> ANY_TRAVELERS_IN_BOOKING = List.of();
+
     private SeniorTraveler seniorTraveler;
+
     @Mock
     private ZeroGravityExperience zeroGravityExperience;
 
@@ -64,7 +70,8 @@ class SeniorTravelerTest {
 
         seniorTravelerWithZeroGBadge.bookZeroGravityExperience(zeroGravityExperience, ANY_TRAVELERS_IN_BOOKING);
 
-        int numberOfZeroGBadges = (int) seniorTravelerWithZeroGBadge.getBadges().stream().filter(Badge.ZERO_G::equals).count();
+        int numberOfZeroGBadges =
+                (int) seniorTravelerWithZeroGBadge.getBadges().stream().filter(Badge.ZERO_G::equals).count();
         assertEquals(expectedNumberOfZeroGBadges, numberOfZeroGBadges);
     }
 
@@ -85,7 +92,8 @@ class SeniorTravelerTest {
 
         seniorTravelerWithStillGotItBadge.bookZeroGravityExperience(zeroGravityExperience, ANY_TRAVELERS_IN_BOOKING);
 
-        int numberOfStillGotItBadges = (int) seniorTravelerWithStillGotItBadge.getBadges().stream().filter(Badge.STILL_GOT_IT::equals).count();
+        int numberOfStillGotItBadges =
+                (int) seniorTravelerWithStillGotItBadge.getBadges().stream().filter(Badge.STILL_GOT_IT::equals).count();
         assertEquals(expectedNumberOfStillGotItBadges, numberOfStillGotItBadges);
     }
 }

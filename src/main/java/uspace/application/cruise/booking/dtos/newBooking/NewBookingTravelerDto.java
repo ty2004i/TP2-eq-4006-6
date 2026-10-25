@@ -2,6 +2,7 @@ package uspace.application.cruise.booking.dtos.newBooking;
 
 public class NewBookingTravelerDto {
     public String name;
+
     public String category;
 
     public NewBookingTravelerDto() {

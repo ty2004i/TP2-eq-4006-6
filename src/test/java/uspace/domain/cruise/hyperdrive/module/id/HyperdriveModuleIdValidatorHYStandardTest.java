@@ -14,7 +14,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdNotBeginningWithHY_whenValidate_thenReturnFalse(){
+    void givenIdNotBeginningWithHY_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdNotBeginningWithHY = new HyperdriveModuleId("BA-300-V");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdNotBeginningWithHY);
@@ -23,7 +23,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdBeginningWithHYLowerCase_whenValidate_thenReturnFalse(){
+    void givenIdBeginningWithHYLowerCase_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdBeginningWithHYLowerCase = new HyperdriveModuleId("hy-77-V");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdBeginningWithHYLowerCase);
@@ -32,7 +32,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdWithoutNumbers_whenValidate_thenReturnFalse(){
+    void givenIdWithoutNumbers_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdWithoutNumbers = new HyperdriveModuleId("HY-V");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdWithoutNumbers);
@@ -41,7 +41,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdNumberBiggerThan999_whenValidate_thenReturnFalse(){
+    void givenIdNumberBiggerThan999_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdNumberBiggerThan999 = new HyperdriveModuleId("HY-1000-V");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdNumberBiggerThan999);
@@ -50,7 +50,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdFinishingWithMoreThanOneUppercaseLetter_whenValidate_thenReturnFalse(){
+    void givenIdFinishingWithMoreThanOneUppercaseLetter_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdFinishingWithMoreThanOneUppercaseLetter = new HyperdriveModuleId("HY-500-DD");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdFinishingWithMoreThanOneUppercaseLetter);
@@ -59,7 +59,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdNotFinishingWithALetter_whenValidate_thenReturnFalse(){
+    void givenIdNotFinishingWithALetter_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdNotFinishingWithALetter = new HyperdriveModuleId("HY-122");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdNotFinishingWithALetter);
@@ -68,7 +68,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdFinishingWithALowerCaseLetter_whenValidate_thenReturnFalse(){
+    void givenIdFinishingWithALowerCaseLetter_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdFinishingWithALowerCaseLetter = new HyperdriveModuleId("HY-500-f");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdFinishingWithALowerCaseLetter);
@@ -77,7 +77,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenIdWithoutHyphen_whenValidate_thenReturnFalse(){
+    void givenIdWithoutHyphen_whenValidate_thenReturnFalse() {
         HyperdriveModuleId anyIdWithoutHyphen = new HyperdriveModuleId("HY77V");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyIdWithoutHyphen);
@@ -86,7 +86,7 @@ class HyperdriveModuleIdValidatorHYStandardTest {
     }
 
     @Test
-    void givenValidFormat_whenValidate_thenReturnTrue(){
+    void givenValidFormat_whenValidate_thenReturnTrue() {
         HyperdriveModuleId anyValidFormatId = new HyperdriveModuleId("HY-77-V");
 
         boolean isValid = hyperdriveModuleIdValidatorHYStandard.isValid(anyValidFormatId);

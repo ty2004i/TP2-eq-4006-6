@@ -9,7 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ZeroGravityExperienceRequestValidatorTest {
     private static final String ANY_EXPERIENCE_BOOKING_DATE_TIME = "2084-04-08T12:30";
+
     private ZeroGravityExperienceRequest zeroGravityExperienceRequest;
+
     private ZeroGravityExperienceRequestValidator zeroGravityExperienceRequestValidator;
 
     @BeforeEach

@@ -13,6 +13,7 @@ import uspace.application.cruise.crew.dtos.CrewMemberDto;
 public class CrewMemberResource {
 
     private final CrewMemberService crewMemberService;
+
     private final CrewMemberDtoValidator crewMemberDtoValidator;
 
     @Inject

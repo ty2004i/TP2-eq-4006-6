@@ -15,10 +15,12 @@ import uspace.application.cruise.booking.traveler.TravelerService;
 public class TravelerResource {
 
     private final TravelerService travelerService;
+
     private final ZeroGravityExperienceRequestValidator zeroGravityExperienceRequestValidator;
 
     @Inject
-    public TravelerResource(TravelerService travelerService, ZeroGravityExperienceRequestValidator zeroGravityExperienceRequestValidator) {
+    public TravelerResource(TravelerService travelerService,
+            ZeroGravityExperienceRequestValidator zeroGravityExperienceRequestValidator) {
         this.travelerService = travelerService;
         this.zeroGravityExperienceRequestValidator = zeroGravityExperienceRequestValidator;
     }
@@ -31,7 +33,8 @@ public class TravelerResource {
                                               ZeroGravityExperienceRequest zeroGravityExperienceRequest) {
         zeroGravityExperienceRequestValidator.validate(zeroGravityExperienceRequest);
 
-        travelerService.bookZeroGravityExperience(cruiseId, bookingId, travelerId, zeroGravityExperienceRequest.experienceBookingDateTime);
+        travelerService.bookZeroGravityExperience(cruiseId, bookingId, travelerId,
+                zeroGravityExperienceRequest.experienceBookingDateTime);
 
         return Response.ok().build();
     }

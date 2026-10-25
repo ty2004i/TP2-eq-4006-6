@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Entity
-public class AdultTraveler extends Traveler{
+public class AdultTraveler extends Traveler {
 
     public AdultTraveler() {
     }
@@ -18,7 +18,8 @@ public class AdultTraveler extends Traveler{
     }
 
     @Override
-    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience, List<Traveler> travelersInBooking) {
+    public void bookZeroGravityExperience(ZeroGravityExperience zeroGravityExperience,
+            List<Traveler> travelersInBooking) {
         zeroGravityExperience.book(id);
         earnOneTimeBadge(Badge.ZERO_G);
     }
