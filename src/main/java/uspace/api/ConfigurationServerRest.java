@@ -24,6 +24,8 @@ import uspace.domain.cruise.hyperdrive.HyperdriveStabilityValidator;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModuleFactory;
 import uspace.infra.hyperdrive.StandardHyperdriveStabilityValidator;
 import uspace.infra.persistence.inMemory.InMemoryCruiseRepository;
+import uspace.api.cruise.hyperdrive.NewMaintenanceDtoValidator;
+import uspace.application.cruise.hyperdrive.MaintenanceService;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -35,8 +37,8 @@ public class ConfigurationServerRest extends AbstractBinder {
 
     @Override
     protected void configure() {
-        bind(new StandardHyperdriveStabilityValidator(new
-                StandardHyperdriveStabilitySystem())).to(HyperdriveStabilityValidator.class);
+        bind(new StandardHyperdriveStabilityValidator(new StandardHyperdriveStabilitySystem()))
+                .to(HyperdriveStabilityValidator.class);
 
         bindAsContract(TravelerFactory.class);
         bindAsContract(BookingFactory.class);
@@ -63,5 +65,7 @@ public class ConfigurationServerRest extends AbstractBinder {
         bindAsContract(HyperdriveModuleService.class);
         bindAsContract(BookingService.class);
         bindAsContract(CruiseService.class);
+        bindAsContract(NewMaintenanceDtoValidator.class);
+        bindAsContract(MaintenanceService.class);
     }
 }

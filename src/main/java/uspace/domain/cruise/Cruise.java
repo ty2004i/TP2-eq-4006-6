@@ -19,6 +19,9 @@ import uspace.domain.cruise.hyperdrive.module.HyperdriveModule;
 import uspace.domain.cruise.hyperdrive.module.exceptions.InvalidHyperdriveModuleActivationDateException;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperienceBookingTimeException;
+import uspace.domain.cruise.crew.exceptions.EmployeeNotFoundException;
+import uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleId;
+import uspace.domain.cruise.hyperdrive.module.maintenance.Maintenance;
 
 import java.util.HashMap;
 import java.util.List;
@@ -138,5 +141,15 @@ public class Cruise {
 
     public List<CrewMember> getCrewMembers() {
         return List.copyOf(crewMembers.values());
+    }
+
+    public void addMaintenance(HyperdriveModuleId moduleId, Maintenance maintenance) {
+        for (String employeeId : maintenance.getEmployeeIds()) {
+            if (!crewMembers.containsKey(employeeId)) {
+                throw new EmployeeNotFoundException();
+            }
+        }
+
+        hyperdriveInventory.addMaintenance(moduleId, maintenance);
     }
 }

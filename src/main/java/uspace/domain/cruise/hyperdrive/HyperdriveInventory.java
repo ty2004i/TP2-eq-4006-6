@@ -8,6 +8,9 @@ import uspace.domain.cruise.hyperdrive.module.exceptions.HyperdriveModuleAlready
 import uspace.domain.cruise.hyperdrive.module.exceptions.HyperdriveModuleConflictException;
 import uspace.domain.cruise.hyperdrive.module.exceptions.InvalidHyperdriveModuleIdException;
 import uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleIdValidator;
+import uspace.domain.cruise.hyperdrive.module.exceptions.HyperdriveModuleNotFoundException;
+import uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleId;
+import uspace.domain.cruise.hyperdrive.module.maintenance.Maintenance;
 
 import java.util.List;
 
@@ -23,11 +26,12 @@ public class HyperdriveInventory {
     @Cascade(CascadeType.SAVE_UPDATE)
     private HyperdriveModuleIdValidator hyperdriveModuleIdValidator;
 
-    public HyperdriveInventory() { }
+    public HyperdriveInventory() {
+    }
 
     public HyperdriveInventory(HyperdriveInventoryId id,
-                               List<HyperdriveModule> hyperdriveModules,
-                               HyperdriveModuleIdValidator hyperdriveModuleIdValidator) {
+            List<HyperdriveModule> hyperdriveModules,
+            HyperdriveModuleIdValidator hyperdriveModuleIdValidator) {
         this.id = id;
         this.hyperdriveModules = hyperdriveModules;
         this.hyperdriveModuleIdValidator = hyperdriveModuleIdValidator;
@@ -59,5 +63,14 @@ public class HyperdriveInventory {
 
     private boolean containsHyperDriveModuleWithSameActivationPeriod(HyperdriveModule newHyperdriveModule) {
         return hyperdriveModules.stream().anyMatch(module -> module.hasSameActivationPeriodThan(newHyperdriveModule));
+    }
+
+    public void addMaintenance(HyperdriveModuleId moduleId, Maintenance maintenance) {
+        HyperdriveModule module = hyperdriveModules.stream()
+                .filter(existingModule -> existingModule.getId().equals(moduleId))
+                .findFirst()
+                .orElseThrow(HyperdriveModuleNotFoundException::new);
+
+        module.addMaintenance(maintenance);
     }
 }
