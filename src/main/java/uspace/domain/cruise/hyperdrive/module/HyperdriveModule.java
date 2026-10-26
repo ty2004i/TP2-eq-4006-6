@@ -3,6 +3,10 @@ package uspace.domain.cruise.hyperdrive.module;
 import jakarta.persistence.*;
 import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleId;
+import uspace.domain.cruise.hyperdrive.module.maintenance.Maintenance;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class HyperdriveModule {
@@ -14,28 +18,24 @@ public class HyperdriveModule {
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(
-                    name = "localDateTime",
-                    column = @Column(name = "activationDateTime")
-            ),
+        @AttributeOverride(name = "localDateTime", column = @Column(name = "activationDateTime")),
     })
     private CruiseDateTime activationDateTime;
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(
-                    name = "localDateTime",
-                    column = @Column(name = "deactivationDateTime")
-            ),
+        @AttributeOverride(name = "localDateTime", column = @Column(name = "deactivationDateTime")),
     })
     private CruiseDateTime deactivationDateTime;
+
+    private List<Maintenance> maintenances = new ArrayList<>();
 
     public HyperdriveModule() {
 
     }
 
     public HyperdriveModule(HyperdriveModuleId id, HyperdrivePowerLevel powerLevel, CruiseDateTime activationDateTime,
-                            CruiseDateTime deactivationDateTime) {
+            CruiseDateTime deactivationDateTime) {
         this.id = id;
         this.powerLevel = powerLevel;
         this.activationDateTime = activationDateTime;
@@ -73,5 +73,15 @@ public class HyperdriveModule {
 
     private boolean isDuringActivation(CruiseDateTime dateTime) {
         return dateTime.isAfter(activationDateTime) && dateTime.isBefore(deactivationDateTime);
+    }
+
+    public void addMaintenance(Maintenance maintenance) {
+        maintenance.validateForPowerLevel(powerLevel);
+
+        maintenances.add(maintenance);
+    }
+
+    public List<Maintenance> getMaintenances() {
+        return List.copyOf(maintenances);
     }
 }
