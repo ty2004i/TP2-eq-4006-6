@@ -1,6 +1,7 @@
 package uspace.domain.cruise.booking;
 
 import jakarta.persistence.*;
+import uspace.domain.cruise.oxygen.OxygenConsumptionRate;
 
 import java.util.Map;
 
@@ -27,5 +28,15 @@ public class CruiseBookings {
 
     public Booking findById(BookingId bookingId) {
         return bookings.get(bookingId);
+    }
+
+    public double calculatePassengersConsumptionPerMinute(double surchargeMultiplier) {
+        if (this.bookings == null || this.bookings.isEmpty()) {
+            return 0.0;
+        }
+
+        return this.bookings.values().stream()
+                .mapToDouble(booking -> booking.calculatePassengerConsumptionPerMinute(surchargeMultiplier))
+                .sum();
     }
 }

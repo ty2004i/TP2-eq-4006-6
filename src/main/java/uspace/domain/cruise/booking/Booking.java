@@ -8,6 +8,7 @@ import uspace.domain.cruise.booking.traveler.Traveler;
 import uspace.domain.cruise.booking.exceptions.InvalidBookingDateException;
 import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.exceptions.NoTravelerToBookException;
+import uspace.domain.cruise.oxygen.OxygenConsumptionRate;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 
 import java.util.List;
@@ -86,5 +87,14 @@ public class Booking {
                         .filter(traveler -> traveler.getId().equals(travelerId))
                         .findFirst()
                         .orElse(null);
+    }
+
+    public double calculatePassengerConsumptionPerMinute(double surchargeMultiplier) {
+        return this.travelers.stream()
+                .mapToDouble(traveler -> {
+                    OxygenConsumptionRate rate = OxygenConsumptionRate.fromTravelerCategory(traveler.getCategory());
+                    return rate.getRatePerMinute() * surchargeMultiplier;
+                })
+                .sum();
     }
 }
