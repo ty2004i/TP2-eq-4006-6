@@ -4,11 +4,10 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import uspace.application.cruise.oxygen.OxygenResponseDto;
+import uspace.application.cruise.oxygen.dto.OxygenResponseDto;
 import uspace.application.cruise.oxygen.OxygenService;
 
-@Path("/cruise/{cruiseId}/oxygen")
-@Consumes(MediaType.APPLICATION_JSON)
+@Path("/cruises/{cruiseId}/oxygen")
 @Produces(MediaType.APPLICATION_JSON)
 public class OxygenResource {
 

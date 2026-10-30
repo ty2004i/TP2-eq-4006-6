@@ -1,4 +1,4 @@
-package uspace.application.cruise.oxygen;
+package uspace.application.cruise.oxygen.dto;
 
 public class OxygenResponseDto {
     public int requiredOxygen;

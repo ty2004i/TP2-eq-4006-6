@@ -2,9 +2,6 @@ package uspace.domain.cruise;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import uspace.domain.cruise.booking.Booking;
 import uspace.domain.cruise.booking.BookingId;
 import uspace.domain.cruise.booking.CruiseBookings;
@@ -16,6 +13,7 @@ import uspace.domain.cruise.cabin.CabinType;
 import uspace.domain.cruise.crew.CrewMember;
 import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
+import uspace.domain.cruise.oxygen.CruiseOxygenPolicy;
 import uspace.domain.cruise.oxygen.Oxygen;
 import uspace.domain.cruise.oxygen.exceptions.OxygenCalculationDateException;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
@@ -28,7 +26,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ExtendWith(MockitoExtension.class)
+
 public class CruiseOxygenTest {
 
     private static final String CALCULATION_DATE_TIME_UNDER_75 = "2085-01-02T00:00";
@@ -56,6 +54,8 @@ public class CruiseOxygenTest {
 
     private final CruiseDateTime endDateTime = new CruiseDateTime(LocalDateTime.parse(END_DATE_TIME));
 
+    private final CruiseOxygenPolicy cruiseOxygenPolicy = CruiseOxygenPolicy.defaultPolicy();
+
     public CruiseOxygenTest() {
     }
 
@@ -79,7 +79,8 @@ public class CruiseOxygenTest {
                 cabinAvailabilities,
                 cruiseBookings,
                 zeroGravityExperience,
-                hyperdriveInventory
+                hyperdriveInventory,
+                cruiseOxygenPolicy
         );
 
         List<Traveler> travelers = List.of(
@@ -127,9 +128,7 @@ public class CruiseOxygenTest {
     @Test
     void givenCalculationDateEqualToEndDateTime_whenCalculateRemainingOxygen_thenReturnsZeroOxygen() {
 
-        CruiseDateTime calculationDateTime = endDateTime;
-
-        Oxygen result = cruise.calculateRemainingOxygen(calculationDateTime);
+        Oxygen result = cruise.calculateRemainingOxygen(endDateTime);
 
         assertEquals(0L, result.value());
     }
@@ -154,4 +153,55 @@ public class CruiseOxygenTest {
                 cruise.calculateRemainingOxygen(afterEnd)
         );
     }
+
+    @Test
+    void givenCustomPolicyAndRemainingTimeOverThreshold_whenCalculateRemainingOxygen_thenApply() {
+        CruiseBookings cruiseBookings = new CruiseBookings(new CruiseBookingsId(), new HashMap<>());
+        CruiseOxygenPolicy customPolicy = new CruiseOxygenPolicy(0.50, 0.10, 0.20);
+
+        Map<CabinType, Integer> cabinStock = new HashMap<>();
+        cabinStock.put(CabinType.STANDARD, 10);
+        cabinStock.put(CabinType.DELUXE, 5);
+        cabinStock.put(CabinType.SUITE, 2);
+
+        CabinAvailabilities cabinAvailabilities = new CabinAvailabilities(new CabinAvailabilitiesId(), cabinStock);
+
+        List<Traveler> travelers = List.of(
+                travelerFactory.create("Adult One", TravelerCategory.ADULT),
+                travelerFactory.create("Adult Two", TravelerCategory.ADULT),
+                travelerFactory.create("Child One", TravelerCategory.CHILD),
+                travelerFactory.create("Senior One", TravelerCategory.SENIOR)
+        );
+
+        Booking booking = new Booking(
+                new BookingId(BOOKING_ID),
+                travelers,
+                CabinType.STANDARD,
+                departureDateTime
+        );
+        cruiseBookings.add(booking);
+
+        Cruise customCruise = new Cruise(
+                new CruiseId("CUSTOM_EXPEDITION_2085"),
+                departureDateTime,
+                endDateTime,
+                cabinAvailabilities,
+                cruiseBookings,
+                new ZeroGravityExperience(),
+                new HyperdriveInventory(),
+                customPolicy
+        );
+
+        customCruise.addCrewMember(new CrewMember("MBR101", new TravelerName("Alice")));
+        customCruise.addCrewMember(new CrewMember("MBR102", new TravelerName("Bob")));
+        customCruise.addCrewMember(new CrewMember("MBR103", new TravelerName("Charlie")));
+
+        CruiseDateTime calculationDateTime = new CruiseDateTime(LocalDateTime.parse(CALCULATION_DATE_TIME_OVER_75));
+
+        Oxygen result = customCruise.calculateRemainingOxygen(calculationDateTime);
+
+        // (2880 min * (950 * 1.10 + 750)) * 1.20 = 6 203 520
+        assertEquals(6_203_520L, result.value());
+    }
+
 }

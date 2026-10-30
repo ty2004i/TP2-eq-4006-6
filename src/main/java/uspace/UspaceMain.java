@@ -21,6 +21,7 @@ import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventoryId;
 import uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleIdValidatorHYStandard;
+import uspace.domain.cruise.oxygen.CruiseOxygenPolicy;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperienceId;
 
@@ -99,7 +100,8 @@ public class UspaceMain implements Runnable {
                                    new ZeroGravityExperience(new ZeroGravityExperienceId(),
                                            DEFAULT_ZERO_GRAVITY_EXPERIENCE_CAPACITY),
                                    new HyperdriveInventory(new HyperdriveInventoryId(),
-                                           new ArrayList < > (), new HyperdriveModuleIdValidatorHYStandard()));
+                                           new ArrayList < > (), new HyperdriveModuleIdValidatorHYStandard()),
+                                   CruiseOxygenPolicy.defaultPolicy());
 
         cruiseRepository.save(cruise);
     }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uspace.api.cruise.oxygen.OxygenCalculationRequest;
+import uspace.application.cruise.oxygen.dto.OxygenResponseDto;
 import uspace.application.utils.dateTimeParser.LocalDateTimeParser;
 import uspace.domain.cruise.Cruise;
 import uspace.domain.cruise.CruiseId;
@@ -43,16 +44,20 @@ public class OxygenServiceTest {
     @Mock
     private Cruise cruise;
 
+    @Mock
+    private OxygenAssembler oxygenAssembler;
+
     private OxygenService oxygenService;
 
     @BeforeEach
     void setUp() {
-        oxygenService = new OxygenService(cruiseRepository, localDateTimeParser);
+        oxygenService = new OxygenService(cruiseRepository, localDateTimeParser, oxygenAssembler);
     }
 
     @Test
     void givenValidRequestAndExistingCruise_whenCalculateRemainingOxygen_thenReturnsCorrectDto() {
 
+        OxygenResponseDto expectedDto = new OxygenResponseDto(REQUIRED_OXYGEN);
         OxygenCalculationRequest request = new OxygenCalculationRequest(CRUISE_ID, CALCULATION_DATE_TIME_VALID);
         LocalDateTime parsedDate = LocalDateTime.of(2085, 1, 31, 8, 0);
         CruiseDateTime calculationDateTime = new CruiseDateTime(parsedDate);
@@ -61,11 +66,10 @@ public class OxygenServiceTest {
         when(localDateTimeParser.parse(CALCULATION_DATE_TIME_VALID)).thenReturn(parsedDate);
         when(cruiseRepository.findById(any(CruiseId.class))).thenReturn(cruise);
         when(cruise.calculateRemainingOxygen(calculationDateTime)).thenReturn(oxygenResult);
+        when(oxygenAssembler.toDto(any(Oxygen.class))).thenReturn(expectedDto);
 
-        // WHEN
         OxygenResponseDto responseDto = oxygenService.calculateRemainingOxygen(request);
 
-        // THEN
         assertNotNull(responseDto);
         assertEquals(REQUIRED_OXYGEN, responseDto.requiredOxygen);
         verify(localDateTimeParser).parse(CALCULATION_DATE_TIME_VALID);

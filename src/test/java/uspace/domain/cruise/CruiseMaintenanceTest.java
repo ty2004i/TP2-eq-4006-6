@@ -14,6 +14,7 @@ import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
 import uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleId;
 import uspace.domain.cruise.hyperdrive.module.maintenance.Maintenance;
+import uspace.domain.cruise.oxygen.CruiseOxygenPolicy;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 
 import java.time.LocalDateTime;
@@ -56,6 +57,9 @@ class CruiseMaintenanceTest {
     @Mock
     private HyperdriveInventory hyperdriveInventory;
 
+    @Mock
+    private CruiseOxygenPolicy cruiseOxygenPolicy;
+
     private Cruise cruise;
 
     @BeforeEach
@@ -67,7 +71,8 @@ class CruiseMaintenanceTest {
                 cabinAvailabilities,
                 cruiseBookings,
                 zeroGravityExperience,
-                hyperdriveInventory);
+                hyperdriveInventory,
+                cruiseOxygenPolicy);
     }
 
     @Test

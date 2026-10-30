@@ -2,6 +2,7 @@ package uspace.application.cruise.oxygen;
 
 import jakarta.inject.Inject;
 import uspace.api.cruise.oxygen.OxygenCalculationRequest;
+import uspace.application.cruise.oxygen.dto.OxygenResponseDto;
 import uspace.application.utils.dateTimeParser.LocalDateTimeParser;
 import uspace.domain.cruise.Cruise;
 import uspace.domain.cruise.CruiseId;
@@ -18,10 +19,14 @@ public class OxygenService {
 
     private final LocalDateTimeParser localDateTimeParser;
 
+    private final OxygenAssembler oxygenAssembler;
+
     @Inject
-    public OxygenService(CruiseRepository cruiseRepository, LocalDateTimeParser localDateTimeParser) {
+    public OxygenService(CruiseRepository cruiseRepository, LocalDateTimeParser localDateTimeParser,
+                         OxygenAssembler oxygenAssembler) {
         this.cruiseRepository = cruiseRepository;
         this.localDateTimeParser = localDateTimeParser;
+        this.oxygenAssembler = oxygenAssembler;
     }
 
     public OxygenResponseDto calculateRemainingOxygen(OxygenCalculationRequest request) {
@@ -29,18 +34,12 @@ public class OxygenService {
         LocalDateTime calculationLocalDateTime = localDateTimeParser.parse(request.calculationDateTime);
         CruiseDateTime calculationCruiseDateTime = new CruiseDateTime(calculationLocalDateTime);
 
-        Cruise cruise = findCruiseById(request.cruiseId);
-        Oxygen requiredOxygen = cruise.calculateRemainingOxygen(calculationCruiseDateTime);
-
-        return new OxygenResponseDto(requiredOxygen.value());
-    }
-
-
-    private Cruise findCruiseById(String cruiseId) {
-        Cruise cruise = cruiseRepository.findById(new CruiseId(cruiseId));
+        Cruise cruise = cruiseRepository.findById(new CruiseId(request.cruiseId));
         if (cruise == null) {
             throw new CruiseNotFoundException();
         }
-        return cruise;
+        Oxygen requiredOxygen = cruise.calculateRemainingOxygen(calculationCruiseDateTime);
+
+        return oxygenAssembler.toDto(requiredOxygen);
     }
 }

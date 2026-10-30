@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import uspace.application.cruise.oxygen.OxygenResponseDto;
+import uspace.application.cruise.oxygen.dto.OxygenResponseDto;
 import uspace.application.cruise.oxygen.OxygenService;
 import uspace.domain.exceptions.MissingParameterException;
 
