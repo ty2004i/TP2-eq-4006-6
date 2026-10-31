@@ -16,6 +16,7 @@ import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModule;
 import uspace.domain.cruise.hyperdrive.module.exceptions.InvalidHyperdriveModuleActivationDateException;
+import uspace.domain.cruise.oxygen.CruiseOxygenPolicy;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperienceBookingTimeException;
 
@@ -67,10 +68,14 @@ class CruiseTest {
     @Mock
     private HyperdriveModule hyperdriveModuleMock;
 
+    @Mock
+    private CruiseOxygenPolicy cruiseOxygenPolicyMock;
+
     @BeforeEach
     void createCruise() {
         cruise = new Cruise(ANY_CRUISE_ID, ANY_DEPARTURE_DATE_TIME, ANY_END_DATE_TIME, cabinAvailabilitiesMock,
-                            cruiseBookingsMock, zeroGravityExperienceMock, hyperdriveInventoryMock);
+                            cruiseBookingsMock, zeroGravityExperienceMock, hyperdriveInventoryMock,
+                cruiseOxygenPolicyMock);
     }
 
     @Test

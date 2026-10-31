@@ -13,6 +13,7 @@ import uspace.domain.cruise.cabin.exceptions.CabinTypeNotAvailableException;
 import uspace.domain.cruise.crew.exceptions.CrewMemberAlreadyInCruiseException;
 import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
+import uspace.domain.cruise.oxygen.CruiseOxygenPolicy;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 import uspace.domain.cruise.crew.CrewMember;
 import uspace.domain.cruise.booking.traveler.TravelerName;
@@ -55,6 +56,9 @@ class CruiseCrewMemberTest {
 
     @Mock
     private HyperdriveInventory hyperdriveInventory;
+
+    @Mock
+    private CruiseOxygenPolicy cruiseOxygenPolicy;
 
     private CabinAvailabilities cabinAvailabilities;
 
@@ -129,6 +133,7 @@ class CruiseCrewMemberTest {
                 cabinAvailabilities,
                 cruiseBookings,
                 zeroGravityExperience,
-                hyperdriveInventory);
+                hyperdriveInventory,
+                cruiseOxygenPolicy);
     }
 }

@@ -2,6 +2,7 @@ package uspace.domain.cruise.dateTime;
 
 import jakarta.persistence.Embeddable;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Embeddable
@@ -22,6 +23,10 @@ public class CruiseDateTime {
 
     public boolean isAfter(CruiseDateTime otherCruiseDateTime) {
         return localDateTime.isAfter(otherCruiseDateTime.localDateTime);
+    }
+
+    public long durationInMinuteUntil(CruiseDateTime target) {
+        return Duration.between(this.localDateTime, target.localDateTime).toMinutes();
     }
 
     @Override

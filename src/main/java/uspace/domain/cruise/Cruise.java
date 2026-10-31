@@ -7,7 +7,6 @@ import uspace.domain.cruise.booking.Booking;
 import uspace.domain.cruise.booking.BookingId;
 import uspace.domain.cruise.booking.CruiseBookings;
 import uspace.domain.cruise.booking.traveler.TravelerId;
-import uspace.domain.cruise.booking.traveler.TravelerName;
 import uspace.domain.cruise.booking.traveler.exceptions.TravelerNotFoundException;
 import uspace.domain.cruise.cabin.CabinAvailabilities;
 import uspace.domain.cruise.cabin.CabinType;
@@ -17,6 +16,10 @@ import uspace.domain.cruise.dateTime.CruiseDateTime;
 import uspace.domain.cruise.hyperdrive.HyperdriveInventory;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModule;
 import uspace.domain.cruise.hyperdrive.module.exceptions.InvalidHyperdriveModuleActivationDateException;
+import uspace.domain.cruise.oxygen.CruiseOxygenPolicy;
+import uspace.domain.cruise.oxygen.Oxygen;
+import uspace.domain.cruise.oxygen.OxygenConsumptionRate;
+import uspace.domain.cruise.oxygen.exceptions.OxygenCalculationDateException;
 import uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience;
 import uspace.domain.cruise.zeroGravityExperience.exceptions.ZeroGravityExperienceBookingTimeException;
 import uspace.domain.cruise.crew.exceptions.EmployeeNotFoundException;
@@ -64,6 +67,9 @@ public class Cruise {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Map<String, CrewMember> crewMembers;
 
+    @Transient
+    private CruiseOxygenPolicy oxygenPolicy;
+
     public Cruise() {
 
     }
@@ -71,7 +77,7 @@ public class Cruise {
     public Cruise(CruiseId id, CruiseDateTime departureDateTime, CruiseDateTime endDateTime,
             CabinAvailabilities cabinAvailabilities,
             CruiseBookings cruiseBookings, ZeroGravityExperience zeroGravityExperience,
-            HyperdriveInventory hyperdriveInventory) {
+            HyperdriveInventory hyperdriveInventory, CruiseOxygenPolicy oxygenPolicy) {
         this.id = id;
         this.departureDateTime = departureDateTime;
         this.endDateTime = endDateTime;
@@ -80,6 +86,7 @@ public class Cruise {
         this.zeroGravityExperience = zeroGravityExperience;
         this.hyperdriveInventory = hyperdriveInventory;
         this.crewMembers = new HashMap<>();
+        this.oxygenPolicy = oxygenPolicy;
     }
 
     public CruiseId getId() {
@@ -152,4 +159,36 @@ public class Cruise {
 
         hyperdriveInventory.addMaintenance(moduleId, maintenance);
     }
+
+    public Oxygen calculateRemainingOxygen(CruiseDateTime calculateDateTime) {
+        if (calculateDateTime.isBefore(departureDateTime) || calculateDateTime.isAfter(endDateTime)) {
+            throw new OxygenCalculationDateException();
+        }
+
+        long totalDurationInMinutes = departureDateTime.durationInMinuteUntil(this.endDateTime);
+        long remainingDurationInMinutes = calculateDateTime.durationInMinuteUntil(this.endDateTime);
+
+        if (totalDurationInMinutes == 0 || remainingDurationInMinutes == 0) {
+            return Oxygen.zero();
+        }
+
+        double remainingRatio = (double) remainingDurationInMinutes / totalDurationInMinutes;
+        boolean isOverconsumption = remainingRatio >= oxygenPolicy.getThresholdRatio();
+
+        double passengerSurcharge = isOverconsumption ? (1.0 + oxygenPolicy.getPassengerSurcharge()) : 1.0;
+        double passengerRatePerMinute = this.cruiseBookings.calculatePassengersConsumptionPerMinute(passengerSurcharge);
+
+        double crewRatePerMinute = this.crewMembers.size() * OxygenConsumptionRate.CREW_MEMBER.getRatePerMinute();
+
+        double totalRatePerMinute = passengerRatePerMinute + crewRatePerMinute;
+        double totalOxygen = remainingDurationInMinutes * totalRatePerMinute;
+
+        if (isOverconsumption) {
+            totalOxygen *= (1.0 + oxygenPolicy.getSafetyMargin());
+        }
+
+        return Oxygen.from((int) Math.ceil(totalOxygen));
+
+    }
+
 }

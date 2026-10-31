@@ -4,9 +4,12 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import standardHyperdriveStabilitySystem.StandardHyperdriveStabilitySystem;
 import uspace.api.cruise.booking.NewBookingDtoValidator;
 import uspace.api.cruise.hyperdrive.NewHyperdriveModuleValidator;
+import uspace.api.cruise.oxygen.OxygenCalculationRequestValidator;
 import uspace.application.cruise.hyperdrive.HyperdriveModuleAssembler;
 import uspace.api.cruise.booking.traveler.zeroGravityExperienceRequest.ZeroGravityExperienceRequestValidator;
 import uspace.application.cruise.hyperdrive.HyperdriveModuleService;
+import uspace.application.cruise.oxygen.OxygenAssembler;
+import uspace.application.cruise.oxygen.OxygenService;
 import uspace.application.utils.dateTimeParser.LocalDateParser;
 import uspace.api.cruise.crew.CrewMemberDtoValidator;
 import uspace.application.cruise.crew.CrewMemberService;
@@ -48,6 +51,7 @@ public class ConfigurationServerRest extends AbstractBinder {
         bindAsContract(BookingAssembler.class);
         bindAsContract(HyperdriveModuleAssembler.class);
         bindAsContract(CruiseAssembler.class);
+        bindAsContract(OxygenAssembler.class);
 
         bind(DateTimeFormatter.ISO_LOCAL_DATE_TIME).to(DateTimeFormatter.class);
         bindAsContract(LocalDateTimeParser.class);
@@ -59,6 +63,7 @@ public class ConfigurationServerRest extends AbstractBinder {
         bindAsContract(ZeroGravityExperienceRequestValidator.class);
         bindAsContract(NewBookingDtoValidator.class);
         bindAsContract(NewHyperdriveModuleValidator.class);
+        bindAsContract(OxygenCalculationRequestValidator.class);
 
         bindAsContract(CrewMemberService.class);
         bindAsContract(TravelerService.class);
@@ -67,5 +72,6 @@ public class ConfigurationServerRest extends AbstractBinder {
         bindAsContract(CruiseService.class);
         bindAsContract(NewMaintenanceDtoValidator.class);
         bindAsContract(MaintenanceService.class);
+        bindAsContract(OxygenService.class);
     }
 }
