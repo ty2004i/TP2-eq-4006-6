@@ -26,6 +26,7 @@ import uspace.domain.cruise.booking.traveler.TravelerFactory;
 import uspace.domain.cruise.hyperdrive.HyperdriveStabilityValidator;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModuleFactory;
 import uspace.infra.hyperdrive.StandardHyperdriveStabilityValidator;
+import uspace.infra.persistence.hibernate.HibernateCruiseRepository;
 import uspace.infra.persistence.inMemory.InMemoryCruiseRepository;
 import uspace.api.cruise.hyperdrive.NewMaintenanceDtoValidator;
 import uspace.application.cruise.hyperdrive.MaintenanceService;
@@ -57,7 +58,7 @@ public class ConfigurationServerRest extends AbstractBinder {
         bindAsContract(LocalDateTimeParser.class);
         bind(new LocalDateParser(DateTimeFormatter.ofPattern(LOCAL_DATE_FORMAT))).to(LocalDateParser.class);
 
-        bind(InMemoryCruiseRepository.class).to(CruiseRepository.class);
+        bind(HibernateCruiseRepository.class).to(CruiseRepository.class);
 
         bindAsContract(CrewMemberDtoValidator.class);
         bindAsContract(ZeroGravityExperienceRequestValidator.class);

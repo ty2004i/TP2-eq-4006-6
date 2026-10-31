@@ -1,7 +1,10 @@
 package uspace.domain.cruise.oxygen;
 
+import jakarta.persistence.Embeddable;
+
 import java.util.Objects;
 
+@Embeddable
 public class CruiseOxygenPolicy {
 
     private static final double DEFAULT_THRESHOLD_RATIO = 0.75;
@@ -16,6 +19,12 @@ public class CruiseOxygenPolicy {
 
     private final double safetyMargin;
 
+
+    public CruiseOxygenPolicy() {
+
+        this(DEFAULT_THRESHOLD_RATIO, DEFAULT_PASSENGER_SURCHARGE, DEFAULT_SAFETY_MARGIN);
+    }
+
     public CruiseOxygenPolicy(double thresholdRatio, double passengerSurcharge, double safetyMargin) {
 
         this.thresholdRatio = thresholdRatio;
@@ -28,11 +37,6 @@ public class CruiseOxygenPolicy {
         if (passengerSurcharge < 0 || safetyMargin < 0) {
             throw new IllegalArgumentException("Rates must be positive or zero");
         }
-    }
-
-    public static CruiseOxygenPolicy defaultPolicy() {
-
-        return new CruiseOxygenPolicy(DEFAULT_THRESHOLD_RATIO, DEFAULT_PASSENGER_SURCHARGE, DEFAULT_SAFETY_MARGIN);
     }
 
     public double getThresholdRatio() {

@@ -28,6 +28,7 @@ public class HyperdriveModule {
     })
     private CruiseDateTime deactivationDateTime;
 
+    @Transient
     private List<Maintenance> maintenances = new ArrayList<>();
 
     public HyperdriveModule() {

@@ -54,7 +54,7 @@ public class CruiseOxygenTest {
 
     private final CruiseDateTime endDateTime = new CruiseDateTime(LocalDateTime.parse(END_DATE_TIME));
 
-    private final CruiseOxygenPolicy cruiseOxygenPolicy = CruiseOxygenPolicy.defaultPolicy();
+    private final CruiseOxygenPolicy cruiseOxygenPolicy = new CruiseOxygenPolicy();
 
     public CruiseOxygenTest() {
     }
