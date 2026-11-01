@@ -21,7 +21,7 @@ public class CruiseOxygenPolicyTest {
 
     @Test
     void givenDefaultPolicy_whenInstantiated_thenValuesAreCorrect() {
-        CruiseOxygenPolicy policy = CruiseOxygenPolicy.defaultPolicy();
+        CruiseOxygenPolicy policy = new CruiseOxygenPolicy();
 
         assertEquals(DEFAULT_THRESHOLD_RATIO, policy.getThresholdRatio());
         assertEquals(DEFAULT_PASSENGER_SURCHARGE, policy.getPassengerSurcharge());

@@ -101,7 +101,7 @@ public class UspaceMain implements Runnable {
                                            DEFAULT_ZERO_GRAVITY_EXPERIENCE_CAPACITY),
                                    new HyperdriveInventory(new HyperdriveInventoryId(),
                                            new ArrayList < > (), new HyperdriveModuleIdValidatorHYStandard()),
-                                   CruiseOxygenPolicy.defaultPolicy());
+                                   new CruiseOxygenPolicy());
 
         cruiseRepository.save(cruise);
     }

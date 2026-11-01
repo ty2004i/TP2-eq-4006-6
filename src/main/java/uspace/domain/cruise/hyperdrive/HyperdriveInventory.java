@@ -22,8 +22,7 @@ public class HyperdriveInventory {
     @OneToMany(fetch = FetchType.EAGER, cascade = jakarta.persistence.CascadeType.ALL)
     private List<HyperdriveModule> hyperdriveModules;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = jakarta.persistence.CascadeType.ALL)
     private HyperdriveModuleIdValidator hyperdriveModuleIdValidator;
 
     public HyperdriveInventory() {

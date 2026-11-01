@@ -67,7 +67,12 @@ public class Cruise {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Map<String, CrewMember> crewMembers;
 
-    @Transient
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "thresholdRatio", column = @Column(name = "oxygenThresholdRatio")),
+        @AttributeOverride(name = "passengerSurcharge", column = @Column(name = "oxygenPassengerSurcharge")),
+        @AttributeOverride(name = "safetyMargin", column = @Column(name = "oxygenSafetyMargin"))
+    })
     private CruiseOxygenPolicy oxygenPolicy;
 
     public Cruise() {

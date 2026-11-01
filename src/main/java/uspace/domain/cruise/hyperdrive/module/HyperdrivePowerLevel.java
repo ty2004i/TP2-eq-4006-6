@@ -1,8 +1,15 @@
 package uspace.domain.cruise.hyperdrive.module;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class HyperdrivePowerLevel {
 
-    private final int powerLevel;
+    private int powerLevel;
+
+    public HyperdrivePowerLevel () {
+
+    }
 
     public HyperdrivePowerLevel(int powerLevel) {
         this.powerLevel = powerLevel;
