@@ -2,9 +2,12 @@ package uspace.api;
 
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import standardHyperdriveStabilitySystem.StandardHyperdriveStabilitySystem;
+import uspace.api.acount.AccountCreationRequestValidator;
 import uspace.api.cruise.booking.NewBookingDtoValidator;
 import uspace.api.cruise.hyperdrive.NewHyperdriveModuleValidator;
 import uspace.api.cruise.oxygen.OxygenCalculationRequestValidator;
+import uspace.application.account.AccountAssembler;
+import uspace.application.account.AccountService;
 import uspace.application.cruise.hyperdrive.HyperdriveModuleAssembler;
 import uspace.api.cruise.booking.traveler.zeroGravityExperienceRequest.ZeroGravityExperienceRequestValidator;
 import uspace.application.cruise.hyperdrive.HyperdriveModuleService;
@@ -20,12 +23,14 @@ import uspace.application.cruise.CruiseAssembler;
 import uspace.application.cruise.CruiseService;
 import uspace.application.cruise.booking.BookingTravelerAssembler;
 import uspace.application.cruise.booking.traveler.TravelerService;
+import uspace.domain.account.AccountRepository;
 import uspace.domain.cruise.CruiseRepository;
 import uspace.domain.cruise.booking.BookingFactory;
 import uspace.domain.cruise.booking.traveler.TravelerFactory;
 import uspace.domain.cruise.hyperdrive.HyperdriveStabilityValidator;
 import uspace.domain.cruise.hyperdrive.module.HyperdriveModuleFactory;
 import uspace.infra.hyperdrive.StandardHyperdriveStabilityValidator;
+import uspace.infra.persistence.hibernate.HibernateAccountRepository;
 import uspace.infra.persistence.hibernate.HibernateCruiseRepository;
 import uspace.infra.persistence.inMemory.InMemoryCruiseRepository;
 import uspace.api.cruise.hyperdrive.NewMaintenanceDtoValidator;
@@ -53,18 +58,21 @@ public class ConfigurationServerRest extends AbstractBinder {
         bindAsContract(HyperdriveModuleAssembler.class);
         bindAsContract(CruiseAssembler.class);
         bindAsContract(OxygenAssembler.class);
+        bindAsContract(AccountAssembler.class);
 
         bind(DateTimeFormatter.ISO_LOCAL_DATE_TIME).to(DateTimeFormatter.class);
         bindAsContract(LocalDateTimeParser.class);
         bind(new LocalDateParser(DateTimeFormatter.ofPattern(LOCAL_DATE_FORMAT))).to(LocalDateParser.class);
 
         bind(HibernateCruiseRepository.class).to(CruiseRepository.class);
+        bind(HibernateAccountRepository.class).to(AccountRepository.class);
 
         bindAsContract(CrewMemberDtoValidator.class);
         bindAsContract(ZeroGravityExperienceRequestValidator.class);
         bindAsContract(NewBookingDtoValidator.class);
         bindAsContract(NewHyperdriveModuleValidator.class);
         bindAsContract(OxygenCalculationRequestValidator.class);
+        bindAsContract(AccountCreationRequestValidator.class);
 
         bindAsContract(CrewMemberService.class);
         bindAsContract(TravelerService.class);
@@ -74,5 +82,6 @@ public class ConfigurationServerRest extends AbstractBinder {
         bindAsContract(NewMaintenanceDtoValidator.class);
         bindAsContract(MaintenanceService.class);
         bindAsContract(OxygenService.class);
+        bindAsContract(AccountService.class);
     }
 }

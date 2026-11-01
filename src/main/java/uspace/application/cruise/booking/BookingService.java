@@ -5,6 +5,10 @@ import uspace.application.cruise.booking.dtos.BookingDto;
 import uspace.application.cruise.booking.dtos.BookingIdDto;
 import uspace.application.cruise.booking.dtos.newBooking.NewBookingDto;
 import uspace.application.utils.dateTimeParser.LocalDateTimeParser;
+import uspace.domain.account.Account;
+import uspace.domain.account.AccountRepository;
+import uspace.domain.account.Username;
+import uspace.domain.account.exceptions.AccountNotFoundException;
 import uspace.domain.cruise.CruiseId;
 import uspace.domain.cruise.booking.Booking;
 import uspace.domain.cruise.booking.BookingFactory;
@@ -27,17 +31,28 @@ public class BookingService {
 
     private final LocalDateTimeParser localDateTimeParser;
 
+    private final AccountRepository accountRepository;
+
     @Inject
     public BookingService(CruiseRepository cruiseRepository, BookingFactory bookingFactory,
             BookingAssembler bookingAssembler,
-                          LocalDateTimeParser localDateTimeParser) {
+                          LocalDateTimeParser localDateTimeParser,
+                          AccountRepository accountRepository) {
         this.cruiseRepository = cruiseRepository;
         this.bookingFactory = bookingFactory;
         this.bookingAssembler = bookingAssembler;
         this.localDateTimeParser = localDateTimeParser;
+        this.accountRepository = accountRepository;
     }
 
     public BookingIdDto createBooking(String cruiseId, NewBookingDto newBookingDto) {
+        Username accountUsername = new Username(newBookingDto.accountUsername);
+
+        Account account = accountRepository.findByUsername(accountUsername);
+        if(account == null) {
+            throw new AccountNotFoundException();
+        }
+
         Cruise cruise = findCruiseById(cruiseId);
 
         LocalDateTime bookingDateTime = localDateTimeParser.parse(newBookingDto.bookingDateTime);
@@ -47,6 +62,9 @@ public class BookingService {
 
         cruise.processBooking(booking);
         cruiseRepository.save(cruise);
+
+        account.addBookingId(booking.getId());
+        accountRepository.save(account);
 
         return new BookingIdDto(booking.getId().toString());
     }

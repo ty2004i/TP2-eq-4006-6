@@ -29,5 +29,6 @@
         <mapping class="uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleIdValidator" />
         <mapping class="uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleIdValidatorHYStandard" />
         <mapping class="uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience" />
+        <mapping class="uspace.domain.account.Account" />
     </session-factory>
 </hibernate-configuration>

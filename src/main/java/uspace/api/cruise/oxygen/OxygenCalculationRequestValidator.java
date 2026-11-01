@@ -4,6 +4,9 @@ import uspace.domain.exceptions.MissingParameterException;
 
 public class OxygenCalculationRequestValidator {
     public void validate(OxygenCalculationRequest oxygenCalculationRequest) {
+        if (oxygenCalculationRequest == null) {
+            throw new MissingParameterException("cruiseId");
+        }
         if (oxygenCalculationRequest.cruiseId == null) {
             throw new MissingParameterException("cruiseId");
         }
