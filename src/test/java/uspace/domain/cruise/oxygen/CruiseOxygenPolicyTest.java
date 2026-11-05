@@ -7,17 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CruiseOxygenPolicyTest {
 
-    private static final double INVALID_THRESHOLD = 1.5;
+    private final double INVALID_THRESHOLD = 1.5;
 
-    private static final double NEGATIVE_SURCHARGE = -0.05;
+    private final double NEGATIVE_SURCHARGE = -0.05;
 
-    private static final double NEGATIVE_MARGIN = -0.10;
+    private final double NEGATIVE_MARGIN = -0.10;
 
-    private static final double DEFAULT_THRESHOLD_RATIO = 0.75;
+    private final double DEFAULT_THRESHOLD_RATIO = 0.75;
 
-    private static final double DEFAULT_PASSENGER_SURCHARGE = 0.05;
+    private final double DEFAULT_PASSENGER_SURCHARGE = 0.05;
 
-    private static final double DEFAULT_SAFETY_MARGIN = 0.10;
+    private final double DEFAULT_SAFETY_MARGIN = 0.10;
 
     @Test
     void givenDefaultPolicy_whenInstantiated_thenValuesAreCorrect() {

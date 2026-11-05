@@ -5,7 +5,9 @@ import java.util.List;
 public class AccountResponseDto {
 
     public String username;
+
     public String homePlanetName;
+
     public List<String> bookingIds;
 
 

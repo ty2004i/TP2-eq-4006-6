@@ -10,7 +10,7 @@ import uspace.domain.account.exceptions.UsernameAlreadyExistsException;
 public class UsernameAlreadyExistsExceptionMapper implements ExceptionMapper<UsernameAlreadyExistsException> {
 
     @Override
-    public Response toResponse(UsernameAlreadyExistsException exception){
+    public Response toResponse(UsernameAlreadyExistsException exception) {
         ErrorResponse error = new ErrorResponse("USERNAME_ALREADY_EXISTS", exception.getMessage());
         return Response.status(400).entity(error).build();
     }

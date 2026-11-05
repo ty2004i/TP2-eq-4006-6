@@ -14,6 +14,7 @@ import uspace.application.account.dtos.AccountResponseDto;
 public class AccountResource {
 
     private final AccountService accountService;
+
     private final AccountCreationRequestValidator validator;
 
     @Inject

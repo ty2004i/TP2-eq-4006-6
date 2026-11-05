@@ -13,6 +13,7 @@ import uspace.domain.account.exceptions.UsernameAlreadyExistsException;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+
     private final AccountAssembler accountAssembler;
 
     @Inject

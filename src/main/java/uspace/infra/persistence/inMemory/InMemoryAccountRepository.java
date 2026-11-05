@@ -9,16 +9,21 @@ import java.util.Map;
 
 public class InMemoryAccountRepository implements AccountRepository {
 
-    private static final Map<Username, Account> accounts = new HashMap<>();
+    private final Map<Username, Account> accounts = new HashMap<>();
 
     @Override
-    public Account findByUsername(Username username) { return accounts.get(username); }
+    public Account findByUsername(Username username) {
+        return accounts.get(username);
+    }
 
     @Override
-    public void save(Account account) { accounts.put(account.getUsername(), account); }
+    public void save(Account account) {
+        accounts.put(account.getUsername(), account);
+    }
 
     @Override
     public boolean existsByUsername(Username username) {
+
         return accounts.containsKey(username);
     }
 }

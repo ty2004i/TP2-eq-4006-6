@@ -15,9 +15,6 @@ public class HomePlanetName implements Serializable {
     }
 
     public HomePlanetName(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("Home planet name cannot be null or empty");
-        }
         this.value = value.trim();
     }
 

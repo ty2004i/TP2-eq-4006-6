@@ -5,6 +5,10 @@ public class AccountCreationRequestDto {
 
     public String homePlanetName;
 
+    public AccountCreationRequestDto () {
+
+    }
+
     public AccountCreationRequestDto(String username, String homePlanetName) {
         this.username = username;
         this.homePlanetName = homePlanetName;

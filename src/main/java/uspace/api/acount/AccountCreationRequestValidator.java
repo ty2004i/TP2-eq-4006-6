@@ -6,13 +6,10 @@ import uspace.domain.exceptions.MissingParameterException;
 public class AccountCreationRequestValidator {
 
     public void validate(AccountCreationRequestDto requestDto) {
-        if (requestDto == null) {
+        if (requestDto.username == null) {
             throw new MissingParameterException("username");
         }
-        if (requestDto.username == null || requestDto.username.trim().isEmpty()) {
-            throw new MissingParameterException("username");
-        }
-        if (requestDto.homePlanetName == null || requestDto.homePlanetName.trim().isEmpty()) {
+        if (requestDto.homePlanetName == null) {
             throw new MissingParameterException("homePlanetName");
         }
     }

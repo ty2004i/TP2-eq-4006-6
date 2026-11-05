@@ -11,13 +11,13 @@ public class OxygenCalculationRequestValidatorTest {
 
     private OxygenCalculationRequestValidator validator;
 
-    private static final String INVALID_CRUISE_ID = null;
+    private final String INVALID_CRUISE_ID = null;
 
-    private static final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
+    private final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
 
-    private static final String CALCULATION_DATE_TIME = "2085-01-31T08:00";
+    private final String CALCULATION_DATE_TIME = "2085-01-31T08:00";
 
-    private static final String INVALID_CALCULATION_DATE_TIME = null;
+    private final String INVALID_CALCULATION_DATE_TIME = null;
 
     @BeforeEach
     void setUp() {

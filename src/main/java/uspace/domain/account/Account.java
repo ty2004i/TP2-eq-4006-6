@@ -12,9 +12,11 @@ import java.util.Objects;
 @Table(name = "Account")
 public class Account {
     @EmbeddedId
+    @AttributeOverride(name = "value", column = @Column(name = "username"))
     private Username username;
 
     @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "homePlanetName"))
     private HomePlanetName homePlanetName;
 
     @ElementCollection(fetch = FetchType.EAGER)

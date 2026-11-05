@@ -49,7 +49,7 @@ public class BookingService {
         Username accountUsername = new Username(newBookingDto.accountUsername);
 
         Account account = accountRepository.findByUsername(accountUsername);
-        if(account == null) {
+        if (account == null) {
             throw new AccountNotFoundException();
         }
 

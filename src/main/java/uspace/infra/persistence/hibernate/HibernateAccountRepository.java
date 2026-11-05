@@ -15,8 +15,8 @@ public class HibernateAccountRepository implements AccountRepository {
     @Override
     public Account findByUsername(Username username) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        return session.get(Account.class, username);
-    } catch (Exception e) {
+            return session.get(Account.class, username);
+        } catch (Exception e) {
             logger.error("Erreur lors de la récupération du compte avec l'username {}", username, e);
             throw e;
         }

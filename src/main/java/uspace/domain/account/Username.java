@@ -1,6 +1,7 @@
 package uspace.domain.account;
 
 import jakarta.persistence.Embeddable;
+import uspace.domain.exceptions.MissingParameterException;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -15,9 +16,6 @@ public class Username implements Serializable {
     }
 
     public Username(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("Username cannot be null or empty");
-        }
         this.value = value.trim();
     }
 

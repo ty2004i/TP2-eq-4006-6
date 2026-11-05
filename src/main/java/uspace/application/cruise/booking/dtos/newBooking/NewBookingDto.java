@@ -14,7 +14,8 @@ public class NewBookingDto {
     public NewBookingDto() {
     }
 
-    public NewBookingDto(String accountUsername, String cabinType, List<NewBookingTravelerDto> travelers, String bookingDateTime) {
+    public NewBookingDto(String accountUsername, String cabinType, List<NewBookingTravelerDto> travelers,
+                         String bookingDateTime) {
         this.accountUsername = accountUsername;
         this.cabinType = cabinType;
         this.travelers = travelers;
