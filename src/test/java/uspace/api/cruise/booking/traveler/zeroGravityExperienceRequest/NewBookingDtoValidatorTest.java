@@ -22,7 +22,7 @@ public class NewBookingDtoValidatorTest {
     }
 
     @Test
-    void givenMissingAccountUsername_whenCreateBooking_thenThrowsMissingParameter() {
+    void givenMissingAccountUsername_whenValidate_thenThrowsMissingParameter() {
         newBookingDto.accountUsername = null;
 
         assertThrows(MissingParameterException.class, () ->
