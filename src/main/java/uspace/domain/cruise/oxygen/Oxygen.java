@@ -8,9 +8,6 @@ public class Oxygen {
     private final int value;
 
     private Oxygen(int value) {
-        if (value < 0) {
-            throw new IllegalArgumentException("Oxygen value cannot be negative");
-        }
         this.value = value;
     }
 
