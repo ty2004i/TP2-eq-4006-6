@@ -25,15 +25,15 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class OxygenServiceTest {
 
-    private static final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
+    private final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
 
-    private static final String CALCULATION_DATE_TIME_VALID = "2085-01-31T08:00";
+    private final String CALCULATION_DATE_TIME_VALID = "2085-01-31T08:00";
 
-    private static final int REQUIRED_OXYGEN = 3_141_600;
+    private final int REQUIRED_OXYGEN = 3_141_600;
 
-    private static final String INVALID_DATE = "2085-01-31";
+    private final String INVALID_DATE = "2085-01-31";
 
-    private static final String CRUISE_NOT_FOUND = "Unknow-cruise";
+    private final String CRUISE_NOT_FOUND = "Unknow-cruise";
 
     @Mock
     private CruiseRepository cruiseRepository;

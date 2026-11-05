@@ -29,21 +29,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CruiseOxygenTest {
 
-    private static final String CALCULATION_DATE_TIME_UNDER_75 = "2085-01-02T00:00";
+    private final String CALCULATION_DATE_TIME_UNDER_75 = "2085-01-02T00:00";
 
-    private static final String CALCULATION_DATE_TIME_OVER_75 = "2085-01-01T04:00";
+    private final String CALCULATION_DATE_TIME_OVER_75 = "2085-01-01T04:00";
 
-    private static final String CALCULATION_DATE_TIME_BEFORE_DEPARTURE = "2084-12-31T23:59";
+    private final String CALCULATION_DATE_TIME_BEFORE_DEPARTURE = "2084-12-31T23:59";
 
-    private static final String CALCULATION_DATE_TIME_AFTER_END = "2085-01-03T04:01";
+    private final String CALCULATION_DATE_TIME_AFTER_END = "2085-01-03T04:01";
 
-    private static final String DEPARTURE_DATE_TIME = "2085-01-01T00:00";
+    private final String DEPARTURE_DATE_TIME = "2085-01-01T00:00";
 
-    private static final String END_DATE_TIME = "2085-01-03T04:00";
+    private final String END_DATE_TIME = "2085-01-03T04:00";
 
-    private static final String BOOKING_ID = "Booking-1";
+    private final String BOOKING_ID = "Booking-1";
 
-    private static final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
+    private final String CRUISE_ID = "JUPITER_MOONS_EXPLORATION_2085";
 
 
     private final TravelerFactory travelerFactory = new TravelerFactory();

@@ -3,6 +3,8 @@ package uspace.application.cruise.booking.dtos.newBooking;
 import java.util.List;
 
 public class NewBookingDto {
+    public String accountUsername;
+
     public String cabinType;
 
     public List<NewBookingTravelerDto> travelers;
@@ -12,7 +14,9 @@ public class NewBookingDto {
     public NewBookingDto() {
     }
 
-    public NewBookingDto(String cabinType, List<NewBookingTravelerDto> travelers, String bookingDateTime) {
+    public NewBookingDto(String accountUsername, String cabinType, List<NewBookingTravelerDto> travelers,
+                         String bookingDateTime) {
+        this.accountUsername = accountUsername;
         this.cabinType = cabinType;
         this.travelers = travelers;
         this.bookingDateTime = bookingDateTime;
