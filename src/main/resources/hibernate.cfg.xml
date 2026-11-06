@@ -26,6 +26,7 @@
         <mapping class="uspace.domain.cruise.crew.CrewMember" />
         <mapping class="uspace.domain.cruise.hyperdrive.HyperdriveInventory" />
         <mapping class="uspace.domain.cruise.hyperdrive.module.HyperdriveModule" />
+        <mapping class="uspace.domain.cruise.hyperdrive.module.maintenance.Maintenance" />
         <mapping class="uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleIdValidator" />
         <mapping class="uspace.domain.cruise.hyperdrive.module.id.HyperdriveModuleIdValidatorHYStandard" />
         <mapping class="uspace.domain.cruise.zeroGravityExperience.ZeroGravityExperience" />

@@ -28,7 +28,9 @@ public class HyperdriveModule {
     })
     private CruiseDateTime deactivationDateTime;
 
-    @Transient
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "hyperdrive_module_id")
+    @OrderColumn(name = "maintenance_position")
     private List<Maintenance> maintenances = new ArrayList<>();
 
     public HyperdriveModule() {
