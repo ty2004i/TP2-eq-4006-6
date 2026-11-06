@@ -5,7 +5,7 @@ import uspace.domain.exceptions.MissingParameterException;
 
 public class NewBookingDtoValidator {
     public void validate(NewBookingDto newBookingDto) {
-        if (newBookingDto.accountUsername == null) {
+        if (newBookingDto.accountUsername == null || newBookingDto.accountUsername.isBlank()) {
             throw new MissingParameterException("accountUsername");
         }
         if (newBookingDto.bookingDateTime == null) {

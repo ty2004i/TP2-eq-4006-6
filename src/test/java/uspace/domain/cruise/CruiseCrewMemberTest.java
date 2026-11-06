@@ -28,112 +28,116 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(MockitoExtension.class)
 class CruiseCrewMemberTest {
 
-    private static final CruiseId ANY_CRUISE_ID = new CruiseId("cruise-1");
+        private static final CruiseId ANY_CRUISE_ID = new CruiseId("cruise-1");
 
-    private static final String VALID_EMPLOYEE_ID = "ABC123";
+        private static final String VALID_EMPLOYEE_ID = "ABC123";
 
-    private static final String ANY_EMPLOYEE_NAME = "Bob";
+        private static final String ANY_EMPLOYEE_NAME = "Bob";
 
-    private static final int INITIAL_STANDARD_CABINS = 2;
+        private static final int INITIAL_STANDARD_CABINS = 2;
 
-    private static final int ONE_RESERVED_CABIN = 1;
+        private static final int ONE_RESERVED_CABIN = 1;
 
-    private static final int NO_AVAILABLE_CABINS = 0;
+        private static final int NO_AVAILABLE_CABINS = 0;
 
-    private static final int ONE_CREW_MEMBER = 1;
+        private static final int ONE_CREW_MEMBER = 1;
 
-    private static final CruiseDateTime DEPARTURE = new CruiseDateTime(
-            LocalDateTime.of(2085, 1, 25, 12, 0));
+        private static final CruiseDateTime DEPARTURE = new CruiseDateTime(
+                        LocalDateTime.of(2085, 1, 25, 12, 0));
 
-    private static final CruiseDateTime END = new CruiseDateTime(
-            LocalDateTime.of(2085, 2, 1, 12, 0));
+        private static final CruiseDateTime END = new CruiseDateTime(
+                        LocalDateTime.of(2085, 2, 1, 12, 0));
 
-    @Mock
-    private CruiseBookings cruiseBookings;
+        @Mock
+        private CruiseBookings cruiseBookings;
 
-    @Mock
-    private ZeroGravityExperience zeroGravityExperience;
+        @Mock
+        private ZeroGravityExperience zeroGravityExperience;
 
-    @Mock
-    private HyperdriveInventory hyperdriveInventory;
+        @Mock
+        private HyperdriveInventory hyperdriveInventory;
 
-    @Mock
-    private CruiseOxygenPolicy cruiseOxygenPolicy;
+        @Mock
+        private CruiseOxygenPolicy cruiseOxygenPolicy;
 
-    private CabinAvailabilities cabinAvailabilities;
+        private CabinAvailabilities cabinAvailabilities;
 
-    private Cruise cruise;
+        private Cruise cruise;
 
-    private CrewMember crewMember;
+        private CrewMember crewMember;
 
-    @BeforeEach
-    void setUp() {
-        createCruiseWithStandardCabins(INITIAL_STANDARD_CABINS);
+        @BeforeEach
+        void setUp() {
+                createCruiseWithStandardCabins(INITIAL_STANDARD_CABINS);
 
-        crewMember = new CrewMember(
-                VALID_EMPLOYEE_ID,
-                new TravelerName(ANY_EMPLOYEE_NAME));
-    }
+                crewMember = new CrewMember(
+                                VALID_EMPLOYEE_ID,
+                                new TravelerName(ANY_EMPLOYEE_NAME));
+        }
 
-    @Test
-    void givenValidCrewMember_whenAddCrewMember_thenAddMemberToCruise() {
-        cruise.addCrewMember(crewMember);
+        @Test
+        void givenValidCrewMember_whenAddCrewMember_thenAddMemberToCruise() {
+                cruise.addCrewMember(crewMember);
 
-        assertEquals(ONE_CREW_MEMBER, cruise.getCrewMembers().size());
-        assertEquals(VALID_EMPLOYEE_ID, cruise.getCrewMembers().get(0).getEmployeeId());
-        assertEquals(ANY_EMPLOYEE_NAME, cruise.getCrewMembers().get(0).getName().toString());
-    }
+                assertEquals(ONE_CREW_MEMBER, cruise.getCrewMembers().size());
+                assertEquals(VALID_EMPLOYEE_ID, cruise.getCrewMembers().get(0).getEmployeeId());
+                assertEquals(ANY_EMPLOYEE_NAME, cruise.getCrewMembers().get(0).getName().toString());
+        }
 
-    @Test
-    void givenAvailableStandardCabin_whenAddCrewMember_thenReserveOneStandardCabin() {
-        cruise.addCrewMember(crewMember);
+        @Test
+        void givenAvailableStandardCabin_whenAddCrewMember_thenReserveOneStandardCabin() {
+                cruise.addCrewMember(crewMember);
 
-        assertEquals(
-                INITIAL_STANDARD_CABINS - ONE_RESERVED_CABIN,
-                cabinAvailabilities.getAvailabilitiesByCabinType(CabinType.STANDARD));
-    }
+                assertEquals(
+                                INITIAL_STANDARD_CABINS - ONE_RESERVED_CABIN,
+                                cabinAvailabilities.getAvailabilitiesByCabinType(CabinType.STANDARD));
+        }
 
-    @Test
-    void givenExistingEmployeeId_whenAddCrewMember_thenRejectWithoutReservingAnotherCabin() {
-        cruise.addCrewMember(crewMember);
+        @Test
+        void givenExistingEmployeeId_whenAddCrewMember_thenRejectWithoutReservingAnotherCabin() {
+                cruise.addCrewMember(crewMember);
 
-        assertThrows(
-                CrewMemberAlreadyInCruiseException.class,
-                () -> cruise.addCrewMember(crewMember));
+                CrewMember anotherCrewMemberWithSameId = new CrewMember(
+                                VALID_EMPLOYEE_ID,
+                                new TravelerName("Alice"));
 
-        assertEquals(ONE_CREW_MEMBER, cruise.getCrewMembers().size());
-        assertEquals(
-                INITIAL_STANDARD_CABINS - ONE_RESERVED_CABIN,
-                cabinAvailabilities.getAvailabilitiesByCabinType(CabinType.STANDARD));
-    }
+                assertThrows(
+                                CrewMemberAlreadyInCruiseException.class,
+                                () -> cruise.addCrewMember(anotherCrewMemberWithSameId));
 
-    @Test
-    void givenNoStandardCabin_whenAddCrewMember_thenThrowWithoutAddingMember() {
-        createCruiseWithStandardCabins(NO_AVAILABLE_CABINS);
+                assertEquals(ONE_CREW_MEMBER, cruise.getCrewMembers().size());
+                assertEquals(
+                                INITIAL_STANDARD_CABINS - ONE_RESERVED_CABIN,
+                                cabinAvailabilities.getAvailabilitiesByCabinType(CabinType.STANDARD));
+        }
 
-        assertThrows(
-                CabinTypeNotAvailableException.class,
-                () -> cruise.addCrewMember(crewMember));
+        @Test
+        void givenNoStandardCabin_whenAddCrewMember_thenThrowWithoutAddingMember() {
+                createCruiseWithStandardCabins(NO_AVAILABLE_CABINS);
 
-        assertTrue(cruise.getCrewMembers().isEmpty());
-        assertEquals(
-                NO_AVAILABLE_CABINS,
-                cabinAvailabilities.getAvailabilitiesByCabinType(CabinType.STANDARD));
-    }
+                assertThrows(
+                                CabinTypeNotAvailableException.class,
+                                () -> cruise.addCrewMember(crewMember));
 
-    private void createCruiseWithStandardCabins(int availableCabins) {
-        cabinAvailabilities = new CabinAvailabilities(
-                new CabinAvailabilitiesId(),
-                new HashMap<>(Map.of(CabinType.STANDARD, availableCabins)));
+                assertTrue(cruise.getCrewMembers().isEmpty());
+                assertEquals(
+                                NO_AVAILABLE_CABINS,
+                                cabinAvailabilities.getAvailabilitiesByCabinType(CabinType.STANDARD));
+        }
 
-        cruise = new Cruise(
-                ANY_CRUISE_ID,
-                DEPARTURE,
-                END,
-                cabinAvailabilities,
-                cruiseBookings,
-                zeroGravityExperience,
-                hyperdriveInventory,
-                cruiseOxygenPolicy);
-    }
+        private void createCruiseWithStandardCabins(int availableCabins) {
+                cabinAvailabilities = new CabinAvailabilities(
+                                new CabinAvailabilitiesId(),
+                                new HashMap<>(Map.of(CabinType.STANDARD, availableCabins)));
+
+                cruise = new Cruise(
+                                ANY_CRUISE_ID,
+                                DEPARTURE,
+                                END,
+                                cabinAvailabilities,
+                                cruiseBookings,
+                                zeroGravityExperience,
+                                hyperdriveInventory,
+                                cruiseOxygenPolicy);
+        }
 }

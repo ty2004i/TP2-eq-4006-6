@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import uspace.domain.exceptions.MissingParameterException;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class OxygenCalculationRequestValidatorTest {
@@ -28,8 +29,7 @@ public class OxygenCalculationRequestValidatorTest {
     void givenValidRequest_whenValidate_thenDoNotThrowException() {
         OxygenCalculationRequest request = new OxygenCalculationRequest(
                 CRUISE_ID,
-                CALCULATION_DATE_TIME
-        );
+                CALCULATION_DATE_TIME);
 
         assertDoesNotThrow(() -> validator.validate(request));
     }
@@ -38,8 +38,7 @@ public class OxygenCalculationRequestValidatorTest {
     void givenMissingCruiseId_whenValidate_thenThrowMissingParameterException() {
 
         OxygenCalculationRequest request = new OxygenCalculationRequest(
-               INVALID_CRUISE_ID, CALCULATION_DATE_TIME
-        );
+                INVALID_CRUISE_ID, CALCULATION_DATE_TIME);
 
         assertThrows(MissingParameterException.class, () -> validator.validate(request));
     }
@@ -49,9 +48,19 @@ public class OxygenCalculationRequestValidatorTest {
 
         OxygenCalculationRequest request = new OxygenCalculationRequest(
                 CRUISE_ID,
-                INVALID_CALCULATION_DATE_TIME
-        );
+                INVALID_CALCULATION_DATE_TIME);
 
         assertThrows(MissingParameterException.class, () -> validator.validate(request));
+    }
+
+    @Test
+    void givenEmptyCalculationDateTime_whenValidate_thenThrowMissingParameterException() {
+        OxygenCalculationRequest request = new OxygenCalculationRequest(CRUISE_ID, "");
+
+        MissingParameterException exception = assertThrows(
+                MissingParameterException.class,
+                () -> validator.validate(request));
+
+        assertEquals("Missing parameter: calculationDateTime", exception.getMessage());
     }
 }

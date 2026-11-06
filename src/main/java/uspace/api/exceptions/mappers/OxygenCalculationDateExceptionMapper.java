@@ -11,7 +11,7 @@ public class OxygenCalculationDateExceptionMapper implements ExceptionMapper<Oxy
 
     @Override
     public Response toResponse(OxygenCalculationDateException exception) {
-        ErrorResponse error = new ErrorResponse("OXYGEN CALCULATION DATE OUTSIDE CRUISE", exception.getMessage());
+        ErrorResponse error = new ErrorResponse("OXYGEN_CALCULATION_DATE_OUTSIDE_CRUISE", exception.getMessage());
         return Response.status(400).entity(error).build();
     }
 }

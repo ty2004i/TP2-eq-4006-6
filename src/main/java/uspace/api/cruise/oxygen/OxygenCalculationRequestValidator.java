@@ -8,7 +8,8 @@ public class OxygenCalculationRequestValidator {
             throw new MissingParameterException("cruiseId");
         }
 
-        if (oxygenCalculationRequest.calculationDateTime == null) {
+        if (oxygenCalculationRequest.calculationDateTime == null
+                || oxygenCalculationRequest.calculationDateTime.isBlank()) {
             throw new MissingParameterException("calculationDateTime");
         }
     }

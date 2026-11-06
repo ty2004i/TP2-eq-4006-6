@@ -6,6 +6,7 @@ import uspace.api.cruise.booking.NewBookingDtoValidator;
 import uspace.application.cruise.booking.dtos.newBooking.NewBookingDto;
 import uspace.domain.exceptions.MissingParameterException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NewBookingDtoValidatorTest {
@@ -25,7 +26,17 @@ public class NewBookingDtoValidatorTest {
     void givenMissingAccountUsername_whenValidate_thenThrowsMissingParameter() {
         newBookingDto.accountUsername = null;
 
-        assertThrows(MissingParameterException.class, () ->
-                validator.validate(newBookingDto));
+        assertThrows(MissingParameterException.class, () -> validator.validate(newBookingDto));
+    }
+
+    @Test
+    void givenEmptyAccountUsername_whenValidate_thenThrowsMissingParameter() {
+        newBookingDto.accountUsername = "";
+
+        MissingParameterException exception = assertThrows(
+                MissingParameterException.class,
+                () -> validator.validate(newBookingDto));
+
+        assertEquals("Missing parameter: accountUsername", exception.getMessage());
     }
 }
